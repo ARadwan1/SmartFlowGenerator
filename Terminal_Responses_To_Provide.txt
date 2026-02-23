@@ -8,37 +8,149 @@ Make sure to preserve the EXACT spacing, line breaks, and formatting from the te
 ### 1. PNR Display (RT)
 (Used to capture Seats, Elements, Names, Segment Status, etc.)
 
-[Paste RT response here]
+-- TST RLR SFP --- 
+RP/DMMSV0101/DMMSV0101            WS/SU  23FEB26/0754Z   8QOCED 
+  1.ALASMARI/SARAH MRS(CMA)   2.GEDIFIE/MESERET MRS(ADT) 
+  3.MAHMOUD/NADIAH MRS(CMP) 
+  4  SV1675 T 03MAR 2 RUHAHB HK3       4  1555 1740   *1A/E* 
+  5 APE AWAD7756@GMAIL.COM 
+  6 APM SV/M+966555847756/AR/P1-3 
+  7 APN SV/M+966555847756/AR/P1-3 
+  8 TK PAX OK23FEB/DMMSV0101//ETSV/S4/P1,3 
+  9 TK OK23FEB/DMMSV0101//ETSV 
+ 10 SSR DOCS SV HK1 I/SAU/1100837929/SA/05SEP98/F//ALASMARI/SARA 
+       H/P1 
+ 11 SSR DOCS SV HK1 I/EG/2132111796/EG/03JAN75/F//MAHMOUD/NADIAH 
+       /P3 
+ 12 SSR DOCS SV HK1 I//2615558836/ET/25DEC00/F//GEDIFIE/MESERET 
+       /P2 
+ 13 SSR CTCE SV HK3 AWAD7756//GMAIL.COM/P1-3 
+ 14 SSR CTCM SV HK3 966555847756/AR/P1-3 
+ 15 SSR WCHC SV HK1/S4/P1 
+ 16 RC RESTRICTED 
+ 17 FA PAX 065-2194446737/ETSV/SAR446.20/23FEB26/DMMSV0101/71490 
+       510/S4/P1 
+ 18 FA PAX 065-2194446738/ETSV/SAR446.20/23FEB26/DMMSV0101/71490 
+       510/S4/P3 
+ 19 FA PAX 065-2194446739/ETSV/SAR585.95/23FEB26/DMMSV0101/71490 
+       510/S4/P2 
+ 20 FB PAX 0000000000 TTP/RT OK ETICKET WELL ISSUED/S4/P1 
+ 21 FB PAX 0000000001 TTP/RT OK ETICKET WELL ISSUED/S4/P3 
+ 22 FB PAX 0000000002 TTP/RT OK ETICKET WELL ISSUED/S4/P2 
+ 23 FE PAX TKT VALD 1Y FRM ISSUE DATE/S4/P1 
+ 24 FE PAX TKT VALD 1Y FRM ISSUE DATE/S4/P3 
+ 25 FE PAX TKT VALD 1Y FRM ISSUE DATE/S4/P2 
+ 26 FP SPAN 
+ 27 FT PAX HANDICAP/S4/P1 
+ 28 FT PAX HANDICAP/S4/P3 
+ 29 FV PAX *F*SV/S4/P1 
+ 30 FV PAX *F*SV/S4/P3 
+ 31 FV PAX SV/S4/P2 
 
 
 ### 2. Ticket Image Display (TWD)
 (Used to capture Passenger Name, Issue Date, POI, DOI, IOI, Form of Payment (FO), Original Issue details, etc.)
 
-[Paste TWD response here]
+TKT-0652194446737        RCI-                     1A  LOC-8QOCED
+ OD-RUHAHB  SI-      FCPI-F   POI-DMM  DOI-23FEB26  IOI-71490510
+   1.ALASMARI/SARAH MRS        ADT            S I
+ 1 ORUH SV1675   T 03MAR1555 OK TDISCMB4      O   03MAR03MAR 1PC
+    AHB
+FARE   F SAR       313.00
+TOTALTAX SAR       133.20
+TOTAL    SAR       446.20 
+/FC RUH SV AHB312.96SAR312.96END
+FE TKT VALD 1Y FRM ISSUE DATE
+FP SPAN
+FT HANDICAP
+FOR TAX/FEE DETAILS USE TWD/TAX
 
 
 ### 3. EMD Image Display (EWD)
 (Used to capture Passenger Name, EMD Issue details, FO lines, Original Issue, etc.)
 
-[Paste EWD response here]
+EMD-0654226691263     TYPE-S                                 SYS-1A  LOC-8QT444
+INT-           FCI-1  1         POI-DMM        DOI-23FEB26         IOI-71490510
+PAX- ALAJMI/FATEMAH                                                         ADT
+RFIC-I  INDIVIDUAL AIRLINE USE
+REMARKS- 
+CPN-1  RFISC-MIS  SV DMM     S-E   SAC- 065W2V6H9E8QN  VALUE-1792.86
+ DESCRIPTION-MISCELLANEOUS
+ PRESENT TO-  
+ PRESENT AT-  
+ SERVICE REMARKS-
+FARE   R    SAR        1792.86                                                 
+EXCH VAL SAR    1792.86      RFND VAL
+TAX-
+TOTAL       SAR         NO ADC 
+/FC  
+FO 065-2181687336DMM20MAY25/71497182/065-2181687336/065-2181687337
+FP O/GOV
+FOID-
 
 
 ### 4. Fare / Price Display (FXP / FXB)
 (Used to capture Fare Families, Total Price, Taxes, Penalties, etc.)
 
-[Paste FXP/FXB response here]
+NO REBOOKING REQUIRED FOR LOWEST AVAILABLE FARE
+   PASSENGER         PTC    NP  FARE<SAR> TAX/FEE   PER PSGR
+01 ALASMARI/SARAH*   ADT     1     282.00  186.05     468.05
+02 GEDIFIE/MESER*    ADT     1     282.00  186.05     468.05
+03 MAHMOUD/NADIA*    ADT     1     282.00  186.05     468.05
+
+                   TOTALS    3     846.00  558.15    1404.15
+
+FXU/TS TO UPSELL NBASICE FOR 151.80SAR
+1-3 FARE FAMILIES:NSAVERE
+1-3 LAST TKT DTE 03MAR26 - DATE OF ORIGIN
+1-3 FARE VALID FOR E TICKET ONLY
+1-3 TICKETS ARE NON-REFUNDABLE
+>                                                 PAGE  2/ 2
+
+======================= One Passenger FXP =======================
+
+ GEDIFIE/MESER*
+
+LAST TKT DTE 03MAR26 - DATE OF ORIGIN
+------------------------------------------------------------
+     AL FLGT  BK T DATE  TIME  FARE BASIS      NVB  NVA   BG
+ RUH
+ AHB SV  1675 T  T 03MAR 1555  TLODSAS4        03MAR03MAR 0P
+
+SAR   282.00      03MAR26RUH SV AHB282.00SAR282.00END
+                  XT SAR 25.00-IO SAR 10.00-IO SAR 53.55-K7
+SAR    35.00-YR   SAR 5.00-T2
+SAR     7.50-DU
+SAR    93.55-XT
+SAR   418.05
+SAR    50.00    AIRLINE FEES
+SAR   468.05    TOTAL
+FARE FAMILIES:    (ENTER FQFn FOR DETAILS, FXY FOR UPSELL)
+FARE FAMILY:FC1:1:NSAVERE
+FXU/TS TO UPSELL NBASICE FOR 50.60SAR
+>                                                 PAGE  2/ 3
 
 
-### 5. Ticket Record (TTE/ALL)
-(Used to capture existing ticket numbers associated with passengers, E3 markers, Itinerary types, etc.)
 
-[Paste TTE/ALL response here]
+### 5. Ticket Record (TTE/ALL)  
+(Used to to delete the saved price )
 
 
 ### 6. Display Fares (DF)
-(Used to view the calculation, VAT, and remaining value or total amounts)
+(Used to do the calculation, add, subtract, multiply, divide in the cryptic command line)
 
-[Paste DF response here]
+>
+df1;2
+3
+>
+df1-2
+-1
+>
+df1*2
+2
+>
+df1/2
+0.5
 
 
 ### 7. Any Other Responses

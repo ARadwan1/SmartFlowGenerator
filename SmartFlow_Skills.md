@@ -139,3 +139,92 @@ Family Name (surname)" assign to FamilyName
 3. **Data Security:** Never store credit cards or sensitive parameters permanently in the script.
 4. **Modularity:** Group long data entry forms into `group { ... }` blocks to improve agent usability. Use `choose` workflows to segment complex steps (like adding an infant vs. adding DOCS only).
 5. **Formulas in `send` or `append`:** Smart flows support evaluating basic math in commands, like `send "df" + var1 + "-" + var2` or `send "df1;" + TMCno`. Be mindful of exact cryptic requirements.
+
+## 5. Advanced Logic Patterns (From Real-World Scripts)
+
+### A. "Looping" via Nested IF Statements
+Smart Flow does not have a native `for` or `while` loop syntax. To handle dynamic amounts of data (e.g. gathering 1 to 20 tickets), you must use heavily nested `if` statements.
+
+**Example (Processing up to 3 tickets):**
+```smartflow
+select "Count Of Documents" from "1,2,3" assign to varNumberOfDocument 
+
+if (varNumberOfDocument != "1"){
+    if (varNumberOfDocument != "2"){
+        group {
+           mandatory ask "Document 3: Enter the next document number" assign to varDocumentNumber3
+        }
+    }
+}
+```
+
+### B. Fallback Capturing (Checking multiple lines for an element)
+When an Amadeus terminal element (like `FO` Original Issue, or `FARE FAMILIES`) could appear on multiple different lines depending on the PNR size, you must nest `if/else` captures to scan down the screen.
+
+**Example (Hunting for an FO line):**
+```smartflow
+capture line : 10, column : 1, length : 7 assign to FoPos
+if (FoPos == "FO 065-"){
+    capture line : 10, column : 8, length : 34 assign to FoString
+} else {
+    capture line : 11, column : 1, length : 7 assign to FoPos
+    if (FoPos == "FO 065-"){
+        capture line : 11, column : 8, length : 34 assign to FoString
+    } else {
+        // ... continue nesting down to line 20+
+    }
+}
+```
+
+### C. Advanced UI Formatting & Validation
+- **Regex Validation:** You can force specific input formats using `with format`.
+  `mandatory ask "Passport issuance country" with format "^[a-zA-Z]{2,3}$" assign to DocIssCou`
+- **Warnings/Alerts:** Use HTML to mimic system warnings inside `choose` blocks.
+  ```smartflow
+  choose "<b style=color:#D40B0B>*** BE SURE TO BOOK SEGMENT FOR 2 SEATS FIRST ***</b>" {
+      when ("OK") {}
+  }
+  ```
+
+## 5. Terminal Coordinates & Capture Mappings (Amadeus Cryptic)
+Because Smart Flow heavily relies on screen scraping via `capture line : X, column : Y, length : Z assign to varName`, understanding the exact layout of Amadeus responses is critical. 
+
+Below are common capture coordinates based on standard Amadeus cryptic responses.
+
+### A. PNR Display (RT)
+PNR Headers often contain the Record Locator and Creating Office.
+- **Record Locator:** Usually Line 2, Column 54-55 (Length 6). (e.g., `8QOCED` in `RP/DMMSV0101/...  8QOCED`)
+- **Passenger Names:** Start on Line 3. Format is usually `1.LAST/FIRST TITLE(PTC)`. 
+- **Segments:** Usually follow names. Look for status codes like `HK`, `HL`, `TK`. 
+- **FA Elements (Tickets):** Format `FA PAX 065-1234567890/ETSV/SAR446.20/...`. Often captured to find ticket numbers or total amounts.
+
+*Note: PNR structures vary greatly based on the number of passengers and elements. Scripts usually need to prompt the user for the specific line number to capture from, or use a loop/Smart Flow logic if available.*
+
+### B. Ticket Image (TWD)
+The `TWD` screen shows exact ticketing details.
+- **Ticket Number:** Line 1, Column 5, Length 13. (e.g., `0652194446737` from `TKT-0652194446737`)
+- **Issue Date (DOI):** Line 2, Column 38, Length 7. (e.g., `23FEB26` from `DOI-23FEB26`)
+- **Fare (Base):** Line 7 (or immediately after itinerary), Column 14, Length varies. (e.g., `313.00` from `FARE   F SAR       313.00`)
+- **Total Tax:** Line 8, Column 14, Length varies.
+- **Total Price:** Line 9, Column 14, Length 9. (e.g., `446.20` from `TOTAL    SAR       446.20`)
+- **Original Issue (FO):** If reissued, the original ticket details appear as an `FO` line near the bottom.
+
+### C. EMD Image (EWD)
+The `EWD` screen is used for ancillary services (bags, seats, penalties).
+- **EMD Number:** Line 1, Column 5, Length 13. (e.g., `0654226691263`)
+- **Passenger Name:** Line 3, Column 6, Length varies. (e.g., `ALAJMI/FATEMAH`)
+- **Value (Base):** Line 11, Column 22, Length 8. (e.g., `1792.86` from `FARE   R    SAR        1792.86`)
+- **Total Price:** Line 14, Column 22, Length 8. (Or `NO ADC` for zero-value reissues).
+
+### D. Fare/Price Display (FXP / FXB)
+Pricing displays show totals and fare families.
+- **Totals Line:** Look for `TOTALS`. The total passenger count, base fare, tax, and absolute total are listed here. (e.g., `                   TOTALS    3     846.00  558.15    1404.15`)
+- **Upsell info:** Shows fare families (e.g., `NSAVERE`, `NBASICE`).
+
+### E. Display Fares (DF) / Calculator
+The `DF` command in Amadeus is used as an inline calculator.
+- Output always appears exactly on the **second line** after the command.
+- Use `capture line : 2, column : 1, length : 9 assign to varName` to grab the calculation result.
+- Example: 
+  `send "df" + var1 + "-" + var2`
+  `capture line : 2, column : 1, length : 9 assign to Difference`
