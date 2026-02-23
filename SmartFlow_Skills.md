@@ -1,0 +1,141 @@
+# Smart Flow Advanced Language - AI Generation Skills Guide
+
+This document serves as the foundation for building an application/AI agent that generates Amadeus Smart Flows from natural language user definitions. It contains the syntax, structure, and best practices for writing Smart Flow Advanced Language scripts based on official Amadeus documentation and real-world examples.
+
+## Next Steps for the Smart Flow Generator Application
+1. Implement an AI prompt template using this MD file as the precise context for the LLM.
+2. Build a user interface where agents/administrators can describe the desired Smart Flow in natural language.
+3. Validate generated scripts against the rules and syntax provided below before allowing users to save or run them.
+
+---
+
+## 1. Syntax Basics & Variables
+Smart Flow scripts run sequentially. The language uses basic scripting logic. 
+
+**Variables:**
+- Variables act as containers to store data (e.g., `firstName`, `paxNo`).
+- Variables are assigned using `assign to <variableName>`.
+- **System Variables:**
+  - `commandline`: Used with `append` to build a cryptic command string.
+  - `lastCommand`: Stores the cryptic command that triggered the flow.
+  - `today`: Contains today's date in `DDMMM` format.
+- Concatenation is done using the `+` operator (e.g., `"NM1" + lastName + "/" + firstName`).
+
+## 2. Statements & Commands
+
+### `send`
+Executes cryptic commands to the Amadeus system.
+```smartflow
+send "RT"
+send "NM1" + lastName + "/" + firstName
+send commandline
+```
+
+### `ask` / User Input Prompts
+Prompts user to enter free text or formatted content. Always uses `assign to`.
+Can be preceded by `mandatory` to force input.
+
+**Variants:**
+- `ask "Question?" assign to varName`
+- `mandatory ask "Question?" assign to varName`
+- `ask date "Date?" assign to varName`
+- `ask date "Date?" with format DDMON assign to varName` (Supported: DDMM, DDMMYY, DDMON, DDMONYY, DDMONYYYY, MMYY)
+- `ask email "Email?" assign to varName`
+- `ask number "Number?" assign to varName`
+- `ask "Question?" with format "^[a-zA-Z]{2,3}$" assign to varName` (Regex support)
+
+### `select`
+Creates a dropdown menu of predefined options.
+```smartflow
+select "Select Document Type" from "Passport (P),Identity card (A),Other" assign to DocType
+```
+
+### `choose`
+Creates a series of radio buttons or menu choices. Each choice triggers a specific block of code `when("...")`.
+```smartflow
+choose "Is this passenger the main document holder?" {
+    when ("Yes") {
+        append "H" to Holder
+    }
+    when ("No") {
+        append "" to Holder
+    }
+}
+```
+
+### `choose until` / `ask until`
+Loops a menu until the user selects the exit condition.
+```smartflow
+choose "Add more sectors or Exit" until "Exit" {
+    when ("Add sector") {
+        // ... ask for details and append
+    }
+}
+```
+
+### `group`
+Groups multiple `ask` or `select` statements into a single form popup.
+```smartflow
+group {
+    mandatory ask "Family Name" assign to lastName
+    mandatory ask "First Name" assign to firstName
+    ask date "Date of Birth" with format DDMONYY assign to dob
+}
+```
+
+### `capture`
+Reads data from the terminal screen (Command Page) at specific coordinates.
+```smartflow
+// Syntax: capture line : X, column : Y, length : Z assign to varName
+capture line : 2, column : 32, length : 2 assign to Seats
+```
+
+### `if` / `else`
+Conditional logic (supported operators: `==`, `!=`, `>`, `<`).
+```smartflow
+if (Seats > 1) {
+    send "APN-SV/M+" + PhoneNo + "/P1-" + Seats
+} else {
+    send "APN-SV/M+" + PhoneNo + "/P1"
+}
+```
+
+### `append`
+Adds text or variables to a string (often to `commandline` or another string variable).
+```smartflow
+append "INT" to SI
+append "/T" + ADTime to commandline
+```
+
+### `call`
+Invokes another nested Smart Flow by name.
+```smartflow
+call "Names, DOCS and Contact"
+```
+
+### `//` (Comments)
+Used for inline comments.
+```smartflow
+// This is a comment
+```
+
+## 3. Advanced UI / HTML Formatting
+Smart Flows support HTML tags within question labels to style text. 
+Common patterns:
+- `<h1 style = color:#D40B0B>Red Title</h1>`
+- `<b>Bold Text</b>`
+- `<i>Italic Text</i>`
+- `<p style=font-size:0.6vw>`
+
+**Example:**
+```smartflow
+mandatory ask "<h1 style = color:#D40B0B>Passenger information</h1>
+Family Name (surname)" assign to FamilyName
+```
+
+## 4. Best Practices for Generated Code
+1. **Validation & State:** Use `capture` heavily to parse existing PNR states (e.g., capturing the number of seats or finding a specific element line number) before executing subsequent steps.
+2. **Error Handling/Looping checks:** Ensure that variables captured from the screen do not lead to invalid executions. (e.g., checking if `Seats != ""`).
+3. **Data Security:** Never store credit cards or sensitive parameters permanently in the script.
+4. **Modularity:** Group long data entry forms into `group { ... }` blocks to improve agent usability. Use `choose` workflows to segment complex steps (like adding an infant vs. adding DOCS only).
+5. **Formulas in `send` or `append`:** Smart flows support evaluating basic math in commands, like `send "df" + var1 + "-" + var2` or `send "df1;" + TMCno`. Be mindful of exact cryptic requirements.

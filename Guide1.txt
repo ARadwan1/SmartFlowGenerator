@@ -1,0 +1,2053 @@
+ 
+ 
+ 
+ 
+amadeus.com 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Smart Flow 
+User Guide 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 2 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Index 
+ 
+_ Smart Flows introduction .............................................................................. 6 
+• What is a Smart Flow .................................................................................. 6 
+• Why should I use Smart Flows? .................................................................. 6 
+• Prerequisites for creating Smart Flows ....................................................... 6 
+_ Smart Flows Manager .................................................................................... 7 
+• Personal and Office Smart Flows explained ................................................ 7 
+_ Creating Smart Flows ..................................................................................... 8 
+• Basic editor ................................................................................................. 8 
+• Using the Basic Smart Flow editor ........................................................... 9 
+• Create a Smart Flow using Command History ....................................... 12 
+• Advanced language editor ........................................................................ 13 
+• Using the Advance Smart Flow editor .................................................... 14 
+• Advanced Smart Flow language ................................................................ 15 
+• // ............................................................................................................ 19 
+• append ................................................................................................... 20 
+• ask .......................................................................................................... 20 
+• ask date .................................................................................................. 22 
+• ask date with format .............................................................................. 23 
+• ask email ................................................................................................ 24 
+• ask number ............................................................................................ 24 
+• ask with format ...................................................................................... 25 
+• ask until .................................................................................................. 26 
+• assign ..................................................................................................... 27 
+• call .......................................................................................................... 28 
+• capture ................................................................................................... 29 
+• choose .................................................................................................... 30 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 3 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+• choose until............................................................................................ 31 
+• choose with input .................................................................................. 32 
+• group ...................................................................................................... 33 
+• if, else ..................................................................................................... 34 
+• mandatory ............................................................................................. 35 
+• select ...................................................................................................... 36 
+• send ....................................................................................................... 37 
+• variables ................................................................................................. 38 
+• HTML ...................................................................................................... 41 
+_ Running a Smart Flow .................................................................................. 44 
+• “Retrieve (RT)” button .............................................................................. 44 
+• “Back” button ........................................................................................... 45 
+_ Opening a Smart Flow ................................................................................. 46 
+_ Editing a Smart Flow .................................................................................... 47 
+_ Hiding a Smart Flow ..................................................................................... 47 
+_ Copying a Smart Flow .................................................................................. 47 
+_ Sharing a Smart Flow ................................................................................... 48 
+_ Deleting a Smart Flow .................................................................................. 49 
+_ Smart Key translation tool ........................................................................... 49 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 4 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ 
+Document control 
+Security level 
+Confidential 
+Company 
+Amadeus UK ACO 
+Department 
+Operations  
+Author 
+Nicola Long 
+Reviewed by 
+Dorthe Knight 
+Date 
+13/01/2017 
+Approved by 
+Nicola Long 
+Date 
+13/01/2017 
+Version 
+Date 
+Change 
+Comment 
+By 
+1 
+13/01/2017 
+[Text] 
+[Text] 
+[Text] 
+2 
+18/12/2018 
+Choose with input 
+ 
+DKNIGHT 
+3 
+01/03/2019 
+lastCommand 
+ 
+DKNIGHT 
+4 
+11/11/2019 
+Updated variables 
+ 
+DKNIGHT 
+5 
+29/01/2020 
+Updated for 23.1 re-
+lease 
+ 
+DKNIGHT 
+6 
+27/03/2020 
+Updated for 23.2 re-
+lease part 1 
+ 
+DKNIGHT 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 5 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ 
+ 
+7 
+11/05/2020 
+Updated for 23.3 
+back button delivery 
+ 
+DKNIGHT 
+8 
+19/08/2020 
+Updated for 23.5 
+Assign delivery 
+ 
+DKNIGHT 
+9 
+29/10/2020 
+Updated variable be-
+haviour 
+ 
+DKNIGHT 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 6 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Smart Flows introduction 
+Amadeus Selling Platform Connect delivers a range of time saving features as part of 
+Productivity Suite. It’s designed to improve both your performance and your productivity, 
+saving you time and money.  
+Smart Flows are part of Productivity Suite, which is an integrated suite of modules available in 
+the Basic Amadeus Selling Platform Connect package.  
+What is a Smart Flow 
+A Smart Flow is a predefined, customisable workflow that can be triggered during the booking 
+process to help agents complete repetitive or complex tasks more efficiently. 
+Why should I use Smart Flows? 
+_ To ease completion of repetitive booking tasks 
+_ Guidance through complex processes 
+_ Increase the speed of tasks 
+_ Create standardised or guided workflows  
+_ Drive data accuracy, PNR uniformity and consistency for downstream processes 
+Prerequisites for creating Smart Flows 
+_ You must have access to the Productivity Suite module before you can access or create 
+Smart Flows. Please get in touch with your Amadeus account manager if you need access.  
+_ A good understanding of Amadeus cryptic commands. 
+_ Selling Platform Connect admin user role. 
+_ A logical mind-set is necessary as basic scripting methods are used with the Advanced Smart 
+Flow language.  
+_ A basic understanding of scripting methodology is helpful but not mandatory. 
+_ A basic understanding of Regular Expressions is helpful but not mandatory. 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 7 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Smart Flows Manager 
+The Smart Flows Manager (Figure 1) is a tool in Selling Platform Connect that allows you to 
+build, amend, delete, copy, share and launch your Smart Flows. You can access the Smart Flow 
+Manager on the main page of Selling Platform Connect by expanding the tools menu and click-
+ing on Smart Flows. 
+Figure 1 
+ 
+ 
+The Smart Flows list is the default page in the Smart Flows Manager. It displays all the Smart 
+Flows that have been created, the columns can be sorted by clicking on the title bars. 
+When you create a Smart Flow, you can set its status to visible or hidden depending on whether 
+or not you want to be able to view it in the dropdown Smart Flow menu (Figure 2) on the main 
+toolbar of Selling Platform Connect.  
+Figure 2 
+ 
+ 
+Personal and Office Smart Flows explained 
+Personal Smart Flows are only available to the user who created them. Office level Smart Flows 
+are created by a user with admin rights and are available to everyone in the office. Only Office 
+level Smart Flows are available for sharing.  
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 8 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Creating Smart Flows 
+There are two Smart Flow editors to cater for different user requirements, basic and advanced. 
+The basic Smart Flow editor will open by default when you click on New.  
+Basic editor 
+The basic editor (Figure 3) allows you to type cryptic commands and easily apply questions to 
+these commands.  
+Figure 3 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 9 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Using the Basic Smart Flow editor 
+1. In the Smart Flow manager, click ‘New’. 
+ 
+2. For tips on how to write commands for Smart Flows, move the mouse over the link entitled 
+How to write Smart Flows (Figure 5). 
+ 
+3. Enter a name for your Smart Flow. 
+ 
+4. Enter an optional description to describe what your Smart Flow will do, who has created 
+the Smart flow etc.  
+ 
+5. Add the content of your Smart Flow by entering one command per line (Figure 4). 
+Figure 4 
+ 
+ 
+6. Now highlight the part of the command that will be different each time e.g. the surname 
+and click ‘Create new question’, next give the label a name and type a question (Figure 5). 
+Figure 5 
+ 
+ 
+7. Carry on until you have created questions for each variable part of the command (Figure 
+6). 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 10 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Figure 6 
+ 
+ 
+8. Before you save your Smart Flow, you have the option to ‘Run in a new Command Page’ to 
+ensure your Smart Flow behaves the way you need it to. You can test both personal and 
+office-level Smart Flows before saving them using the ‘Run in a new Command Page’ 
+button; this ensures they do not affect any live bookings if you are working in a Production 
+OID. 
+ 
+9. If you want your Smart Flow to be visible on the Smart Flow menu, check the box that says 
+‘Show in Your Smart Flows’.  
+ 
+10. Once you are satisfied your Smart Flow is correct click ‘Save’.  
+ 
+11. When the Smart Flow has been saved the date and time will appear under the ‘Save’ 
+button (Figure 7).   
+Figure 7 
+ 
+ 
+12. Click the ‘Close’ button to return to the Smart Flow list where you should see your newly 
+created Smart Flow.  
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 11 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+13. This is how the above Smart Flow example should look when you launch it;  
+ 
+The first pop up box will contain the questions from the first line of the syntax (Figure 8).  
+Figure 8 
+  
+ 
+The second pop up box will contain the question on the second line of the syntax (Figure 9). 
+Figure 9 
+ 
+ 
+14. The name field and service request commands including the data the user has entered into 
+the boxes will be transmitted to the Command page or Graphical page depending on which 
+area you are using in Selling Platform Connect.    
+ 
+Warning: We strongly advise against storing credit card information in Smart Flows to 
+ensure you are PCI DSS compliant or any passenger sensitive data for security reasons. 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 12 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Create a Smart Flow using Command History 
+1. From the command page launch the Command History using the icon       in the top right 
+of the screen or by holding Alt + right arrow together. 
+ 
+2. Highlight the entries you would like to include in your Smart Flow (hold Shift to highlight 
+multiple lines) and click on ‘Create Smart Flow’ (Figure 10).  
+ 
+Figure 10 
+ 
+ 
+3. Follow steps 2 through to 10 from Using the basic Smart Flow editor to complete your 
+Smart Flow.  
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 13 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Advanced language editor 
+Is only available to the Smart Flow or Office Administrator. Should you need to add an 
+advanced language Smart Flow to a basic user please use this workaround. 
+The Advanced Language Editor can be accessed from the switch link (Figure 11) and allows you 
+to create a Smart Flow using a specific language defined for Smart Flows (Figure 12).  
+The advance language uses some basic elements of computer programming language, to 
+understand the elements available and construct the syntax see section Advanced Smart Flow 
+Language. 
+Figure 11 
+ 
+Figure 12 
+ 
+ 
+You can switch from the basic Smart Flow editor to the advanced language editor provided you 
+have the necessary admin rights.  
+When you first create a new Smart Flow that has not yet been saved, you can switch from basic 
+to advanced language editor by clicking on the advanced language editor link. If you do not 
+save any changes, you can undo the switch and return to the basic Smart Flow editor by clicking 
+on ‘Undo Changes and Go Back to Smart Flow Editor’ however, you will lose any changes you 
+made in the advanced language. 
+When you reopen an existing Smart Flow it opens in the editor that it was last saved in; you 
+cannot switch back to the basic editor if it was saved in the advanced editor. 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 14 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Using the Advance Smart Flow editor 
+1. In the Smart Flow manager, click ‘New’. 
+ 
+2. Enter a name for your Smart Flow. 
+ 
+3. Enter an optional description to describe what your Smart Flow will do, who has created 
+the Smart flow etc.  
+ 
+4. Click on the link to ‘Switch to the advance language editor’.  
+ 
+5. Type your Smart Flow syntax into the editor, see section Advanced Smart Flow Language.  
+ 
+6. Before you save your Smart Flow, you have the option to ‘Run in a new Command Page’ to 
+ensure your Smart Flow behaves the way you need it to. 
+ 
+7. If you want your Smart Flow to be visible on the Smart Flow menu check the box that says 
+‘Show in Your Smart Flows’.  
+ 
+8. Once you are satisfied your Smart Flow is correct click ‘Save’.  
+ 
+9. When the Smart Flow has been saved the date and time will appear under the ‘Save’ 
+button (Figure 13). 
+Figure 13 
+ 
+ 
+10. Click the ‘Close’ button to return to the Smart Flow list where you should see your newly 
+created Smart Flow.  
+
+
+ 
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 15 of 51 
+ 
+amadeus.com 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Advanced Smart Flow language 
+The Smart Flow language is a logical syntax language that is compiled by structuring specific statements together. It is used to create Smart Flows 
+in advanced mode in the Advance language editor.  
+Glossary of statements 
+Statement 
+Description 
+// 
+Used to inactivate a command or add notes to the Smart Flow 
+append 
+Is used to build a commandline; combine the data stored in variables or combine a variable with a string. 
+ask 
+Allows you to create a question and store the answer in a variable. Variables are ways to store values to use later. 
+ask date 
+Allows you to create a question that only accepts a date as the answer (see supported formats), the answer will be stored in 
+a variable.  
+ask date with 
+format 
+Allows you to create a question that only accepts a date as the answer in a predefined format (see supported formats), the 
+answer will be stored in a variable. 
+ask e-mail 
+Allows you to create a question that only accepts an email as the answer, the answer will be stored in a variable.  
+ask number 
+Allows you to create a question that only accepts a number as the answer, the answer will be stored in a variable.  
+ask with for-
+mat 
+Allows you to ask a question where the response needs to match a regular expression format. 
+ask until 
+Allows you to ask a list of questions until the user chooses the chosen exit statement. 
+assign 
+is used to add a fixed value to a variable overriding any previous values in that variable. 
+call 
+Is used to call another Smart Flow from within the running Smart Flow. 
+capture 
+Allows you to capture data from the command page, the data will be stored in a variable.  
+choose 
+Allows you to create a menu of radio buttons with an action(s) sitting behind each option. 
+choose until 
+Allows you to create a menu of radio buttons with an action(s) sitting behind each option, the menu will stay open until the 
+user decides to exit. 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 16 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+choose with 
+input 
+Allows you to write free text instruction describing various option with an action(s) sitting behind each option.  
+group 
+This keyword is used to group questions together, the questions within the group will appear on a single form to the user. 
+if, else 
+Allows you to create a condition that evaluates to true or false. If true the first action(s) will be taken if false the second ac-
+tion will be executed. 
+mandatory 
+Allows you to ensure a question is mandatory, the field cannot be left empty. Mandatory precedes any of the following ask 
+questions; 
+• 
+ask 
+• 
+ask date 
+• 
+ask date with format 
+• 
+ask email 
+• 
+ask number 
+• 
+ask with format 
+• 
+ask until 
+ 
+e.g. mandatory ask  "What is the first name of the passenger" assign to firstName 
+select 
+Allows you to create a dropdown menu of predefined options and store the choice in a variable.  
+send 
+Sends cryptic entries with or without variable data. 
+ 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 17 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Glossary of Variables 
+Statement 
+Description 
+commandline 
+If append is used this variable can be used to build a cryptic command. 
+lastCommand 
+  If a Smart Flow that was launched by a Smart Trigger then the command that triggered will be saved inside the  
+  lastCommand variable. 
+today 
+Is a variable with predefined data, the data stored in today is todays date in the following format DDMMM. 
+
+
+ 
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 18 of 51 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+To display a list of available statements open the advanced Smart Flow editor (Figure 14) and 
+press Ctrl + Space Bar together (Figure 15), this will display a dropdown menu you can select 
+from.   
+Figure 14 
+ 
+Figure 15 
+ 
+ 
+Selecting from the menu will add the selected statement in the correct format.  
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 19 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+// 
+// is used to inactivate a command or add comments to the Smart Flow which are only 
+readable in the Smart Flow editor but has no interaction on the flow. 
+Example 1: 
+A command needs to be temporarily deactivated but kept in the flow so that it can be 
+activated should it be needed again: 
+//send "RM capture contains " + checkForTST 
+Example 2: 
+A description in the flow to explain an action or the purpose of a section: 
+//list of tsts present 
+ 
+Figure 16 
+send "TQT" 
+capture line : 1, column : 1, length : 3 assign to checkForTST 
+//send "RM capture contains " + checkForTST 
+if (checkForTST != "TST") { 
+  //list of tsts present 
+  mandatory ask number "Please enter TST number to capture the last date of ticketing " 
+assign to lineNumber 
+  send "TQT/T" + lineNumber 
+} 
+capture line : 1, column : 40, length : 7 assign to lastDateOfTicketing 
+send "RM lastDateOfTicketing contains " + lastDateOfTicketing 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 20 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+append  
+append is used to combine the data stored in variables, combine a variable with a string e.g. 
+building up a cryptic command subject to choices made for optional elements. 
+Figure 17 
+group { 
+  mandatory ask "<h1>Frequent flyer details</h1> 
+   
+  Frequent flyer airline" with format "[a-zA-Z]{2}" assign to airline 
+  mandatory ask number "Frequent flyer number" assign to FFNnumber 
+  mandatory ask number "Passenger number holding the card" assign to passengerNumber 
+} 
+send "VFFD" + airline 
+ask "If you want to restrict the airlines being sent this frequent flyer card please add the 
+airline codes with comma separation 
+e.g BA 
+BA, AA 
+If not just enter to continue the Smart Flow" assign to restrictedAirlines 
+append "FFN" + airline + "-" + FFNnumber to commandline 
+if (restictedAirlines != "") { 
+  append "," + restrictedAirlines to commandline 
+} 
+append "/P" + passengerNumber to commandline 
+send commandline 
+ 
+Figure 18 
+Here the ,<restrictedAirlines> is only added if an one was entered 
+restrictedAirlines – provided (BA) 
+restrictedAirlines – not provided 
+FFNAA-3435,BA/P1 
+FFNAA-3435/P1 
+ 
+ask 
+ask prompts you with an optional question, an ask question must be assigned to a variable 
+(Figure 19). 
+The sentence within the quotes e.g. "What is the passenger first name" is the question that 
+appears in the prompt when a Smart Flow is running (Figure 20). The word after assign to is 
+the name of the variable e.g. firstName. 
+It is helpful to think of variables as containers that hold information. Their sole purpose is to 
+label and store data, this data can then be used throughout your Smart Flow.  
+Figure 19 
+mandatory ask "What is the passengers first name" assign to firstName 
+mandatory ask "What is the passengers last name" assign to lastName 
+send "NM1" + lastName + "/" + firstName 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 21 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Figure 20 
+ 
+ 
+When you are naming variables, think hard about the names. Try your best to make sure that 
+the name you assign your variable is accurately descriptive and understandable to another 
+administrator who may be trying to amend or troubleshoot the Smart Flow. That other 
+administrator could also be you when you revisit a Smart Flow that you wrote months or even 
+years earlier. 
+It is also helpful (although not strictly necessary) to use camelCase as a naming convention for 
+variables.  This is where a name is formed of multiple words that are joined together as a single 
+word, the first letter of each of the multiple words is capitalised so that each word that makes 
+up the name can easily be read e.g. firstName, phoneNumber, formOfPayment etc.  
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 22 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ask date 
+ask date (Figure 21) ensures the user will have to answer the question with a date (Figure 22) 
+with any one of these supported formats:  
+_ DDMM e.g. 2501 
+_ DDMMYY e.g. 250117 
+_ DDMON e.g. 25JAN 
+_ DDMONYY e.g. 25JAN17 
+_ DDMONYYYY e.g. 25JAN2017 
+_ MMYY e.g. 0117 
+ 
+Figure 21 
+group { 
+ 
+select "Visa type" from "Business,Leisure" assign to visaType 
+  mandatory ask date "Visa expiry date" assign to visaExpiryDate 
+} 
+send "RM passengers " + visaType + " visa is valid until " +  visaExpiryDate 
+ 
+Figure 22 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 23 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ask date with format 
+ask date with format ensures the user will have to answer the question with a specified date 
+format (Figure 24Figure 24) from one of the supported formats below:  
+_ DDMM e.g. 2501 
+_ DDMMYY e.g. 250117 
+_ DDMON e.g. 25JAN 
+_ DDMONYY e.g. 25JAN17 
+_ DDMONYYYY e.g. 25JAN2017 
+_ MMYY e.g. 0117 
+ 
+To see the available date formats press CTRL + Space Bar for a dropdown menu (Figure 23) to 
+choose from. 
+Figure 23 
+ 
+Figure 24 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 24 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ask email 
+ask email (Figure 25) ensures the user can only type an e-mail address (Figure 26). The e-mail 
+address must contain an @ symbol.  
+Figure 25 
+ask email "Enter email address" assign to emailAddress 
+send "APE-" + emailAddress 
+ 
+Figure 26 
+ 
+ask number  
+ask number (Figure 27) ensures the user can only type a number (Figure 28). Note that a 
+number cannot contain spaces if used to ask for a phone number. Only characters 0 to 9 are 
+permitted.  
+Figure 27 
+ask number "Enter mobile number" assign to mobileNumber 
+send "APM-" + mobileNumber 
+   
+Figure 28 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 25 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ask with format 
+ask with format (Figure 29) ensures the user can only type a response that matches the given 
+regular expression (Figure 30).  
+Figure 29 
+select "Select the card type" from " ,MasterCard,Visa,Amex,Diners,AirPlus" assign to 
+cardType 
+if (cardType ==" ")   {  
+ select "You did not select a card type" from " ,MasterCard,Visa,Amex,Diners,AirPlus" 
+assign to cardType 
+} 
+if (cardType !=" ") { 
+  if (cardType =="Amex") { 
+    append "AX" to ccType 
+    group { 
+      mandatory ask "Enter card number" with format "(37)[0-9]{12}" assign to cardNumber 
+      mandatory ask date "Enter expiry date" with format  MMYY assign to expDate 
+      mandatory ask number "Enter security code" assign to secCode 
+    } 
+  } 
+ 
+Figure 30 
+ 
+To learn more about Regular Expressions and to build and test your patterns we recommend 
+you use one of the many free regex testing websites on line. 
+Below are a few examples: 
+• RegExr: http://regexr.com: 
+• Regex Tester and Debugger https://www.regextester.com/: 
+• Regex 101 https://regex101.com/: 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 26 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+ask until 
+ask until allows you to ask a list of questions (Figure 31) until the user chooses the chosen exit 
+statement, in this example the exit statement is the number 4 (Figure 32). 
+Figure 31 
+ask "Have you offered the additional service? 
+ 
+Enter the the number from the list below 
+ 
+1 Visa 
+2 Hotel 
+3 Car 
+4 Exit 
+" until "4"{ 
+ 
+when ("1") { 
+ 
+ 
+send "RM advice for Visa given for the passenger for their 
+destination/transit point" 
+ 
+} 
+ 
+when ("2") { 
+ 
+ 
+send "RM hotel options given" 
+ 
+} 
+  when ("3") { 
+   
+send "RM car options given" 
+  } 
+} 
+ 
+ 
+Figure 32 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 27 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+assign 
+Assign is used to add a fixed value to a variable overriding any previous values in that variable.  
+update data into the variable following the to (overrides the previous value in the variable) 
+In the example below the Smart Flow the full descriptions of a select statement are encoded 
+using assign. (Figure 35). For example, if the selected content of the variable gender is Male, 
+then the if condition replaces Male with M in the variable.  
+Figure 33 
+select "<b>gender</b>" from "Male,Female,Male Infant,Female Infant,Undisclosed 
+gender,Unspecified gender" assign to gender 
+if (gender == "Male"){ 
+  assign "M" to gender 
+} 
+if (gender == "Female"){ 
+  assign "F" to gender 
+} 
+if (gender == "Male Infant"){ 
+  assign "MI" to gender 
+} 
+if (gender == "Female Infant"){ 
+  assign "FI" to gender 
+} 
+if (gender == "Undisclosed gender"){ 
+  assign "U" to gender 
+} 
+if (gender == "Unspecified gender"){ 
+  assign "X" to gender 
+} 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 28 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+call 
+The call keyword is used to call another Smart Flow from within the running Smart Flow. The 
+call keyword is followed by the name of the Smart Flow to call; the name is surrounded by 
+double quotes (Figure 34). Note the called Smart Flow name is case sensitive. 
+In the example below the Smart Flow I am calling if you choose the USA flights option is called 
+USA checkin remarks (Figure 35). The call statement will first look for the target Smart Flow 
+among the Office level Smart Flows if not found it will then look for the Smart Flow among the 
+agent’s Personal Smart Flows. 
+Figure 34 
+choose "Add checkin remarks for ...." until "Exit" { 
+ 
+when ("Domestic Flights") { 
+ 
+ 
+mandatory ask "Which sectors are domestic? e.g. 2 or 3,6" assign 
+to domSectors 
+    send "RIR for domestic flights please be at the airport/s" + domSectors 
+    send "RIR 60 minutes before scheduled departue time/s" + domSectors 
+ 
+} 
+ 
+when ("International flights") { 
+ 
+ 
+mandatory ask "Which sectors are international? e.g. 2 or 3,6" 
+assign to intSectors 
+    send "RIR for international flights please be at the airport/s" + intSectors 
+    send "RIR at least 120 minutes before scheduled departue time/s" + intSectors 
+ 
+} 
+  when ("USA flights") { 
+   
+call "USA checkin remarks" 
+  } 
+} 
+ 
+Figure 35 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 29 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+capture 
+capture allows you to capture part of the cryptic screen (Figure 36). The capture instruction is 
+followed by three parameters: 
+_ Line: followed by a number to indicate which line of the screen the beginning of the string 
+is captured. 
+_ Column: followed by a number to indicate which column of the screen the beginning of the 
+string is captured. 
+_ Length: followed by a number to indicate the length of the string that is captured. 
+Figure 36 
+send "TQT" 
+capture line : 1, column : 1, length : 3 assign to checkForTST 
+//send "RM capture contains " + checkForTST 
+if (checkForTST != "TST") { 
+  //list of tsts present 
+  mandatory ask number "Please enter TST number to capture the last date of ticketing " 
+assign to lineNumber 
+  send "TQT/T" + lineNumber 
+} 
+capture line : 1, column : 40, length : 7 assign to lastDateOfTicketing 
+send "RM lastDateOfTicketing contains " + lastDateOfTicketing 
+ 
+Capture must also have a variable name in order to store the information you have captured. 
+Capture can only capture text that was generated after initialising the Smart Flow. You may 
+want to use commands like RT or RE within the Smart Flow, to re-generate past context. 
+A tip is to check the captured data by sending a RM back to the PNR with the content e.g. from 
+above Smart Flow: 
+send "TQT" 
+capture line : 1, column : 1, length : 3 assign to checkForTST 
+send "RM capture contains " + checkForTST 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 30 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+choose 
+The choose statement is used to provide the user with a limited number of options to perform 
+certain actions (Figure 37). The different options are proposed with radio buttons to the user. 
+The user can only select one of the options by choosing the appropriate radio button (Figure 
+38).  
+Every option (radio button) is associated to a when which has a block of instructions enclosed 
+in brackets, this indicates what actions need to be performed when the user selects the option 
+(radio button). Once a choice has been made the content of when statement is executed.  
+Figure 37 
+choose "Add checkin remarks for ...."{ 
+  when ("Domestic Flights") { 
+ 
+ 
+mandatory ask "Which sectors are domestic? e.g. 2 or 3,6" assign 
+to domSectors 
+    send "RIR for domestic flights please be at the airport/s" + domSectors 
+    send "RIR 60 minutes before scheduled departue time/s" + domSectors 
+ 
+} 
+ 
+when ("International flights") { 
+ 
+ 
+mandatory ask "Which sectors are international? e.g. 2 or 3,6" 
+assign to intSectors 
+    send "RIR for international flights please be at the airport/s" + intSectors 
+    send "RIR at least 120 minutes before scheduled departue time/s" + intSectors 
+ 
+} 
+} 
+ 
+Figure 38 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 31 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+choose until 
+The choose until works in a similar way to the choose statement. The main difference with the 
+choose until instruction is that the menu will stay open until the user decides to exit (Figure 
+39Figure 39).  
+Once a choice has been made, the block of instructions associated with the when statement 
+are executed. Once finished the flow goes back to the menu so you can choose another option 
+(radio button) or the same option again, this will happen until the exit statement is chosen.  
+The example shown below (Figure 40) will display three radio button options to the user.  
+The exit statement could be simply the word Exit though any other statement can be used e.g. 
+Finished, Close, I’m done etc. 
+Figure 39 
+choose "Add checkin remarks for ...." until "Exit" { 
+ 
+when ("Domestic Flights") { 
+ 
+ 
+mandatory ask "Which sectors are domestic? e.g. 2 or 3,6" assign 
+to domSectors 
+    send "RIR for domestic flights please be at the airport/s" + domSectors 
+    send "RIR 60 minutes before scheduled departue time/s" + domSectors 
+ 
+} 
+ 
+when ("International flights") { 
+ 
+ 
+mandatory ask "Which sectors are international? e.g. 2 or 3,6" 
+assign to intSectors 
+    send "RIR for international flights please be at the airport/s" + intSectors 
+    send "RIR at least 120 minutes before scheduled departue time/s" + intSectors 
+ 
+} 
+  when ("USA flights") { 
+   
+call "USA checkin remarks" 
+  } 
+} 
+ 
+Figure 40 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 32 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+choose with input 
+The choose with input statement is used to provide the user with a limited number of options 
+to perform certain actions (Figure 41). The different options are listed in the description 
+allowing the user to input the predefined alphanumeric entry in the text box.  (Figure 42).  
+Every entry is associated to a when which has a block of instructions enclosed in brackets, this 
+indicates what actions need to be performed when the user inputs the entry.  Should the entry 
+not match the when statement then the user will remain in the choose with input until the a 
+matched input has been entered. 
+ 
+Figure 41 
+choose "Add checkin remarks for .... 
+1 Domestic Flights 
+2 International flights" with input{ 
+  when ("1") { 
+   
+mandatory ask "Which sectors are domestic? e.g. 2 or 3,6" assign to 
+domSectors 
+    send "RIR for domestic flights please be at the airport/s" + domSectors 
+    send "RIR 60 minutes before scheduled departue time/s" + domSectors 
+ 
+} 
+ 
+when ("2") { 
+ 
+ 
+mandatory ask "Which sectors are international? e.g. 2 or 3,6" 
+assign to intSectors 
+    send "RIR for international flights please be at the airport/s" + intSectors 
+    send "RIR at least 120 minutes before scheduled departue time/s" + intSectors 
+ 
+} 
+} 
+ 
+Figure 42 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 33 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+group 
+The group keyword (Figure 43) allows you to group several questions together so they appear 
+in a single pop up box.  
+The word group is typed and immediately after it is followed by an opening bracket {. The 
+closing bracket } is placed after the last ask question. Brackets or curly brackets are used to 
+enclose the questions you would like to appear together (Figure 44).  
+Figure 43 
+group { 
+ 
+mandatory ask "What is the passengers first name" assign to firstName 
+ 
+mandatory ask "What is the passengers last name" assign to lastName 
+} 
+append firstName + " "  + lastName to fullName 
+send "NM1" + lastName + "/" + firstName 
+send "RIR all fare rules readback to " + fullName 
+ 
+Figure 44 
+ 
+The group command can only include ask and/or select instructions and must include at least 
+one ask and/or select instruction. 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 34 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+if, else 
+if, else perform different actions depending on whether a condition is matched or not (Figure 
+45).  
+The if instruction is always followed by a condition between parenthesis (), if the condition is 
+true the first block of instructions that is enclosed by the curly brackets is executed (Figure 46) 
+else the second block of instructions is executed.  
+The terms being compared can be a variable or a constant. 
+_ == verifies whether the two terms are equal. 
+_ != verifies whether the two terms are different. 
+_ > verifies whether the first term is greater than the second term. 
+_ < verifies whether the first term is less than the second term. 
+_ >= verifies whether the first term is greater than or equal to the second term. 
+_ <= verifies whether the first term is less than or equal to the second term. 
+Figure 45 
+select "Does the customer need a visa" from "Yes,No" assign to visaYesNo 
+if (visaYesNo == "Yes") { 
+ 
+mandatory ask "Which country does the customer need a visa for" assign to 
+visaCountry 
+  send "RM I have advised the customer that they need a visa for " + visaCountry 
+} 
+else { 
+ 
+send "RM The customer does not need a visa" 
+} 
+ 
+Figure 46 
+ 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 35 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+mandatory 
+Preceding any of the following questions with the word mandatory (Figure 47) ensures the user 
+cannot leave the question empty. Any mandatory questions are highlighted yellow (Figure 48). 
+_ ask 
+_ ask with format 
+_ ask email 
+_ ask number 
+_ ask date 
+_ ask date with format 
+_ ask until 
+Figure 47 
+mandatory ask "What is the passengers first name" assign to firstName 
+mandatory ask "What is the passengers last name" assign to lastName 
+send "NM1" + lastName + "/" + firstName 
+ 
+Figure 48 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 36 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+select 
+select allows the user to choose an option from a drop-down menu (Figure 49). The options 
+will be pre-defined in the Smart Flow (Figure 50).  
+select must be followed by a question enclosed in quotes. After the question the word from 
+and then a list of options separated by commas and enclosed in quotes e.g. "Business,Leisure". 
+As with ask a select question must have a variable name.  
+*note* spaces before or after a comma in the select list is a character which will be stored in 
+the variable. There is no limit to the number of options that can be offered. 
+Figure 49 
+group { 
+ 
+select "Visa type" from "Business,Leisure" assign to visaType 
+  mandatory ask date "Visa expiry date" assign to visaExpiryDate 
+} 
+send "RM passengers " + visaType + " visa is valid until " +  visaExpiryDate 
+ 
+Figure 50 
+ 
+In order to select an option from a select question dropdown menu the user can: 
+_ Use the mouse to open the dropdown list then select the correct option using your mouse.  
+_ Use the arrow down/up keys to scroll through the options. 
+_ Use the keyboard to type the option (if you know it) and it will find the option in the list. 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 37 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+send 
+send allows you to send cryptic entries. Cryptic entries can be sent on their own or with 
+variables (Figure 51) to pass the data you have collected in the questions into the cryptic 
+commands (Figure 52). Variables do not need to be used in the order in which they are asked 
+for.  
+Figure 51 
+group { 
+ 
+mandatory ask "What is the passengers first name" assign to firstName 
+ 
+mandatory ask "What is the passengers last name" assign to lastName 
+} 
+append firstName + " "  + lastName to fullName 
+send "NM1" + lastName + "/" + firstName 
+send "RIR all fare rules readback to " + fullName 
+ 
+ 
+Figure 52 
+ 
+  
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 38 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+variables 
+Variables are designed to hold the values gathered from an append, ask, assign, capture or 
+select and can be used in if conditions and send commands. 
+If you reuse a variable name inside the same Smart Flow or the variable name is found in a 
+called smart flow then you will find the ask, assign or select will be prefilled with the last saved 
+data in the variable which can then either be kept or overwritten. 
+There are 3 predefined variables in Smart Flows: 
+• commandline 
+• lastCommand 
+• today 
+Below you will find description for those 3. 
+commandline 
+commandline is used to construct cryptic entries and variables in a sequence to form a 
+commandline. This is useful if you have data that is optional to send in a cryptic command. In 
+the example below (Figure 53) the guarantee is optional in the passive hotel command (Figure 
+54).  
+Figure 53 
+group { 
+  mandatory ask "<b>ADD PASSIVE HOTEL</b> 
+   
+  <b>City code</b> e.g. JFK" assign to CITY 
+  mandatory ask date "<b>Date of arrival</b> e.g. 10JAN" with format DDMON assign to INDATE 
+  mandatory ask date "<b>Date of departure</b> e.g. 15JAN" with format DDMON assign to OUTDATE 
+  select 
+"<b>Room 
+type</b>" 
+from 
+"SINGLE,TWIN,DOUBLE,KING,STANDARD,MODERATE,SUPERIOR,EXECUTIVE,SUITE" assign to ROOMTYP 
+  mandatory ask "<b>Rate type</b> e.g. RAC (RAC rate)" assign to RATETYP 
+  mandatory ask "<b>Rate currency</b> e.g. GBP" assign to CUR 
+  mandatory ask "<b>Daily rate</b> e.g. 150.00" assign to DLYRATE 
+  select "Is the rate inclusive of Breakfast 
+  <font color=red>Change to No if not included</font>" from "Yes,No" assign to Breakfast 
+  mandatory ask "<b>Hotel name</b> e.g. JFK HILTON" assign to HTLNAME 
+  mandatory ask "<b>Confirmation number</b> e.g. 123456" assign to CONFNO 
+  ask "<b>Guarantee method</b> e.g. CCVI4929444433331111EXP1017 
+  <font color=\"blue\">Optional</font>" assign to GTEETYPE 
+  ask "<b>Special requests</b> e.g HIGH FLOOR 
+  <font color=\"blue\">Optional</font>" assign to SPECIAL 
+} 
+append "HU1AHK1" + CITY + INDATE + "-" +  OUTDATE + "/RT-" + ROOMTYP + "/SR-" + RATETYP +"/" 
++ CUR + DLYRATE + " " + HTLNAME + "/BS-91299999/CF-" + CONFNO to commandline  
+if (GTEETYPE!=""){ 
+  append "/G-" + GTEETYPE to commandline 
+} 
+if (SPECIAL!=""){ 
+  append "/SI-" + SPECIAL to commandline 
+} 
+send commandlinesend commandline 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 39 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Figure 54 
+ 
+ 
+ 
+ 
+lastCommand 
+If the Office Smart Flow is launched by a Smart Trigger, the variable lastCommand contain the 
+command which triggered this smart trigger. It will be empty if the Smart Flow was not 
+opened by a Smart Trigger. Hence, it is recommended that Smart Flows using the 
+lastCommand variable are hidden from “Your Smart Flows”. 
+Smart Trigger for TTP without /RT (Figure 55) will result in the lastCommand containing the 
+TTP entry allowing the /RT to be added using the send element. (Figure 56) 
+Figure 55 
+ 
+Figure 56 
+send lastCommand + "/RT" 
+capture line : 1, column : 1, length : 50 assign to variable 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 40 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+if (variable == "OK ETICKET") { 
+  send "QE30-RT" 
+  send "RFQM" 
+} 
+else {} 
+ 
+today 
+The today variable already has a value in place. It is used to get the value of the date (todays 
+date) when executing a Smart Flow (Figure 57). 
+When using the today variable the date will be returned in the format DDMMM e.g. 29JAN 
+(Figure 58). 
+Figure 57 
+send "RM Booking created " + today 
+ 
+Figure 58 
+ 
+
+
+ 
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 41 of 51 
+ 
+amadeus.com 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+ 
+HTML 
+HTML ‘Hypertext Markup Language’ allows you to format the questions in Smart Flows (Figure 60). Without HTML, all text will be the same size, 
+colour, weight etc. It is not necessary to use HTML when creating Smart Flows but if you do want to insert it (Figure 59), the following exhaustive 
+list is supported.  
+ 
+Element 
+Type 
+Type 
+<div> 
+Tag 
+Defines a division or a section e.g. <div>This is a division</div> 
+<span> 
+Tag 
+Is used to group inline-elements e.g. <p>This text is <span style=\"color:blue\">blue</span></p> 
+<p> 
+Tag 
+Defines a paragraph e.g. <p>This is a paragraph. With a sentence. This is another sentence</p>.  
+<h1> 
+Tag 
+Defines a heading, h1 is the most important heading e.g. <h1>This is a heading</h1>  
+<h2> 
+Tag 
+Defines a heading e.g. <h2>This is a heading</h2> 
+<h3> 
+Tag 
+Defines a heading e.g. <h3>This is a heading</h3> 
+<i> 
+Tag 
+Specifies italic text e.g. <i>This is italic text</i> 
+<b> 
+Tag 
+Specifies bold text e.g. <b>This is bold text</b> 
+<u> 
+Tag 
+Specifies underlined text e.g. <u>This is underlined text</u> 
+<br> 
+Tag 
+Specifies a line break e.g. This is a sentence.<br> This sentence will be on another line. 
+<font> 
+Tag 
+Specifies a font (must include an attribute) e.g. <font color=\"red\" size=\"6\">Some red size 6 text</font> 
+style 
+Attribute  
+Allows you to set the style of a HTML element e.g. <p style=\"color:red\">Some red text</p> 
+color 
+Attribute  
+Allows you to specify the color of the text e.g. <font color=\"red\">Some red text</font> 
+size 
+Attribute  
+Allows you to define the text size, browser default is 3 e.g. <font size=\"6\">Some font size 6 text</font>  
+color 
+SubAttribute 
+Allows you to specify the color of the text e.g. <span style=\"color:red\">Some red text</span> 
+font-size 
+SubAttribute 
+Allows you to define the font size <span style=\"font-size:2\">Some font size 2 text</span> 
+font-weight 
+SubAttribute 
+Allows you to define the font weight <p style=\"font-weight:bold\">Some bold text</p> 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 42 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+text-decoration 
+SubAttribute 
+Allows you to add  decoration <p style=\"text-decoration:underline\">Some underlined text</p> 
+ 
+
+
+ 
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 43 of 51 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+Figure 59 
+group { 
+  mandatory 
+ask 
+"<h1><font 
+color=\"#005EB8\">Advance 
+Passenger 
+Information 
+System 
+(APIS)</font></h1><font color=\"#00A9E0\">Add Secure Flight Passenger Data to your 
+PNR</font><br><br><b>Passenger number</b> <i><font color=\"#787875\">e.g. 1</font></i>" with 
+format "^\d{1,2}$" assign to PaxNum 
+  ask "<b>Sector number(s)</b> <i><font color=\"#787875\">e.g. 3,5 or leave blank to apply 
+to all sectors</font></i>" with format "^\d{1,2}$|^\d{1,2}\-\d{1,2}$|^\d{1,2}\,\d{1,2}$" 
+assign to SectorNos 
+  mandatory ask "<b>First given name</b> <i><font color=\"#787875\">e.g. DAVID</font></i>" 
+with format "^[a-zA-Z\s]{2,}\b$" assign to FirstName 
+  ask "<b>Second name(s)</b> <i><font color=\"#787875\">e.g. RICHARD</font></i>" with format 
+"^[a-zA-Z\s]{2,}\b$" assign to MiddleName 
+  mandatory ask "<b>Surname</b> <i><font color=\"#787875\">e.g. SMITH</font></i>" with format 
+"^[a-zA-Z\s]{2,}\b$" assign to Surname 
+  mandatory 
+ask 
+date 
+"<b>Date 
+of 
+birth</b> 
+<i><font 
+color=\"#787875\">e.g. 
+10JAN77</font></i>" with format DDMONYY assign to DateBirth 
+  select 
+"<b>Gender</b>" 
+from 
+"Male,Female,Male 
+Infant,Female 
+Infant,Undisclosed 
+Gender,Unspecified Gender" assign to Gender 
+  select "<b>Document type</b>" from "None (basic info only),Passenger Passport,Approved 
+Identity Document,Passport Card,Crew Member Certificate,A-Identity Card,C-Identity Card,I-
+Identity Card" assign to TravelDocType 
+} 
+ 
+Figure 60 
+ 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 44 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Running a Smart Flow 
+1. In either Booking file or Command Page click on ‘Your Smart Flows’ on the main toolbar of 
+Selling Platform Connect to display the list of active Smart Flows. 
+ 
+2. Click on the link for the Office or Personal Smart Flow that you want to run. 
+When you run a Smart Flow, the commands that are sent by the Smart Flow are echoed in the 
+Command Page Output (Figure 63).  
+Figure 61 
+ 
+“Retrieve (RT)” button 
+The “Retrieve (RT)” button allows you to re-display the open PNR. 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 45 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Whitelisted cryptic commands 
+The free text box with the “Enter” button allows a limited set of whitelisted cryptic commands 
+to be entered. The commands can be seen when hovering over the 
+and are listed below: 
+• RT and combinations (Blacklist on RTQ, RTU, RT<<Recloc>>,FXP/FXA etc (to retrieve, 
+price and create TST)) 
+• Profile Display (All variants starting with PD) 
+• XE (for deleting element numbers) 
+• AN, AE, AA, AD  
+• SN, SE, SA, SD 
+• Fare Display (FQD, FQF, FQN) 
+• TQT & TQM (and variants) 
+• M (to move down) 
+• MD, MU, MT, MB (with suffixes for combinations) 
+“Back” button 
+Allows the user to go back one step in the Smart Flow to correct data sent to the Smart Flow. 
+When the back button is selected the pop up will be returned containing the data sent by the 
+Smart Flow.  
+The recommended protocol will be to: 
+1. Use the “Retrieve (RT)” button to delete the sent commands by entering XE <line 
+numbers>  
+2. Update the data in the fill in boxes where correction is needed and submit the data 
+to continue the flow. 
+When the pop up is first returned the back button is grayed out but once the Smart flow has 
+moved from one pop up to another the back button is enabled. 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 46 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Opening a Smart Flow 
+1. In the Smart Flow Manager, select the Smart Flow you want to open by clicking on the line 
+it is located on to highlight it (Figure 62). 
+ 
+2. Click on ‘Open’. 
+ 
+3. Alternatively, you can simply double-click on the line the Smart Flow is located on. 
+Figure 62 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 47 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Editing a Smart Flow 
+1. In the Smart Flow list, select the Smart Flow you want to edit, the Smart Flow will be 
+opened in the mode that it was last saved, either command-based mode or advanced 
+language mode.  
+ 
+2. Update the fields as required and click on ‘Save’. 
+Hiding a Smart Flow 
+1. In the Smart Flow list, select the Smart Flow you want to hide.  
+ 
+2. Click on ‘Hide from Your Smart Flows’. The hidden Smart Flow is no longer available in the 
+Your Smart Flows menu on the main toolbar but can still be triggered by Smart Triggers 
+and called by Quality Monitor rules. 
+Copying a Smart Flow 
+1. In the Smart Flow list, select the Smart Flow you want to copy.  
+ 
+2. Select ‘Copy to New’. 
+ 
+3. Give your Smart Flow a new name and make any required changes to the Smart Flow 
+language.  
+ 
+4. Click on ‘Save’. 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 48 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Sharing a Smart Flow 
+1. In the Smart Flow list, select the Smart Flow you want to share.  
+ 
+2. Click on ‘Switch to sharing view’ (Figure 63). 
+ 
+3. Select the offices you want to share with (Figure 64) and click on ‘Save changes’.  
+Figure 63 
+ 
+Figure 64 
+ 
+ 
+ 
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 49 of 51 
+ 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Deleting a Smart Flow 
+1. In the Smart Flow list, select the Smart Flow you want to delete.  
+ 
+2. Click on ‘Delete’. 
+ 
+3. In the Delete Smart Flow pop-up window, click on ‘Delete’ to confirm the deletion. 
+ 
+Warning: When deleting an Office-level Smart Flow, please make sure that Smart Flow 
+is not in use by a Quality Monitor rule or a Smart Trigger as you risk blocking the agent 
+in their booking flow. 
+Smart Key translation tool  
+The Smart Key Translation tool is a module within Productivity Suite which allows an agent 
+and/or office administrator to translate Smart Keys from Sell Classic into Smart Flows in Sell 
+Connect (Figure 65). 
+The output of the translation can be saved as a personal or Office Smart Flow. Most existing 
+Smart Keys can be translated but as the syntax is different not all Smart Key commands can be 
+translated into Smart Flows. Please refer to the table below for capabilities and limitations. 
+ 
+Figure 65 
+ 
+
+
+ 
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 50 of 51 
+ 
+amadeus.com 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+Command  
+Command description 
+Translatable 
+Macros (obsolete) 
+e.g: [repeat ... Until e] 
+No* 
+<SEND  
+Send command  
+Yes  
+<?  
+Prompt action  
+Yes  
+<CHOOSE  
+Choose command  
+Yes  
+<@  
+Use variable  
+Yes  
+<TODAY>  
+Today date value  
+Yes  
+<CLEAR>  
+Clear the history  
+No  
+<NEWLINE>  
+Add a new line (for queue)  
+No  
+<SET>  
+Paste the save value  
+Yes  
+<GET  
+Copy a selected text  
+Yes  
+<REPEAT UNTIL  
+Repeat until instruction  
+Yes  
+<*  
+Add a comment  
+Yes  
+<BOL>  
+Put the cursor on begin of line  
+No  
+<CLEAR TO EOL>  
+Clear from cursor to end of line  
+No  
+<IF THEN ELSE> 
+If then else instruction  
+Yes  
+<BACKSPACE>  
+Remove the previous character  
+No  
+<PA  
+Action key (3270)  
+No  
+<EOL  
+Put the cursor to end of line  
+No  
+<COLUMN  
+Put the cursor to column number of the response  
+No  
+<BOS  
+Put the cursor to the begin of the screen response  
+No  
+<DELETE>  
+Delete the next character after the cursor position  
+No  
+<NEXT FIELD>  
+Go to the next field (3270)  
+No  
+<LEFT ARROW>  
+Move the cursor to a left character in the response  
+No  
+<UP ARROW>  
+Move the cursor to a up character in the response  
+No  
+<RIGHT ARROW>  
+Move the cursor to a right character in the response  
+No  
+
+
+ 
+TCH-TDS-TCO-IMP-PRI-PR4 
+Last update: 25/06/2021 
+Page 51 of 51 
+ 
+amadeus.com 
+ 
+ 
+ 
+Strictly 
+CONFIDENTIAL 
+CONFIDENTIAL & RESTRICTED 
+<SWITCH WINDOW>  
+Change the window for the next request (split window mode)  
+No  
+<WAIT FOR  
+Wait for a specific response (timeout) before continue  
+No  
+<LINE  
+Move the cursor to the line number  
+No  
+<PF  
+Function key (3270)  
+No  
+<DOWN ARROW>  
+Move the cursor to a down direction in the response  
+No  
+<EOS>  
+Move the cursor to the end of screen response  
+No  
+[ ] 
+Optional prompt  
+Yes  
+<PREVIOUS FIELD>  
+Move the cursor to the previous field (3270)  
+No  
+<ATTENTION>  
+Send an attention key (3270)  
+No  
+<%  
+Add an embedded Smart Key  
+Yes  
+ 
+Echo/write to command page  
+Yes  
+ 
+* If the Smart Key is re-written with the supported Smart Flow syntax, then the Smart Key can be translated.  
+ 
+
+

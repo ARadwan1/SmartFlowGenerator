@@ -1,0 +1,308 @@
+send "RTI"
+capture line : 2, column : 32, length : 2 assign to Seats
+
+if (Seats < 10) {
+  capture line : 2, column : 32, length : 1 assign to Seats
+}
+
+
+if (Seats != "") {
+
+
+select 
+"<b style = color:#000000>Develped by :<b style = color:#A49365> Ali H.Alshabib </b></b><b style = color:#000000>version no. :<b style = color:#A49365> 202105270939</b></b>
+
+<b style = color:#641E16>Extra Seat - <b style = color:#641E16>إضافة مقعد اضافي</b></b>
+
+<b style = color:#D40B0B>Choose the required service الرجاء اختيار الخدمة المطلوبة
+<p style=font-size:0.6vw 
+<b style = color:#AEB6BF>CBBG = GOLD BAG | EXST = extra seat for pax" 
+
+from "CBBG,EXST" assign to SerType
+if (SerType == "CBBG") {
+  
+    group{
+    ask "<b style = color:##000080>Add passenger lastname 
+    اضف اسم العائلة للضيف " assign to PAXLN
+    ask "<b style = color:##000080>Add passenger Firstname 
+    اضف الاسم الاول للضيف" assign to PAXFN
+    
+         }    
+ 
+send "NM2" + PAXLN + "/" + PAXFN + "/CBBG"
+send "srcbbg-goldbag/p1"
+send "FXB/R,U*CBBG"
+
+}
+else {
+  
+	if (SerType =="EXST") {
+	  choose "<b style = color:#000080> Choose extra seat type
+    اختر نوع المقعد الإضافي" {
+      when ("OVERSIZED PASSENGER - الحجم الزائد") {
+    	
+      group{
+      ask "<b style = color:#000080> Add passenger lastname
+      اضف اسم العائلة للضيف" assign to PAXLN1
+      ask "<b style = color:#000080> Add passenger firstname
+      اضف الاسم الاول للضيف" assign to PAXFN1
+           }
+           
+    send "NM2" + PAXLN1 + "/" + PAXFN1 + "/EXST"
+    send "rti"
+    
+    ask "<b style = color:#000080> Add segment line number
+  اضف رقم خط السير " assign to  SEGLN1
+  send "SREXST-OVERSIZED PASSENGER/S" + SEGLN1 + "/P1"
+  send "FXB/R,U*EXST"
+        }
+    	
+
+    when ("PERSONAL COMFORT - راحة المسافر") {
+    		     
+        group{
+      ask "<b style = color:#000080> Add passenger lastname
+      اضف اسم العائلة للضيف" assign to PAXLN1
+      ask "<b style = color:#000080> Add passenger firstname
+      اضف الاسم الاول للضيف" assign to PAXFN1
+    }
+    send "NM2" + PAXLN1 + "/" + PAXFN1 + "/EXST"
+    send "rti"
+    
+    ask "<b style = color:#000080> Add segment line number
+  اضف رقم خط السير " assign to  SEGLN1
+  send "SREXST-PERSONAL COMFORT/S" + SEGLN1 + "/P1"
+  send "FXP/R,U*EXST"	
+	}
+}
+            }
+}
+
+send "rtn"
+mandatory ask number "<b style = color:#000080> Insert mobile Number including international code
+                أدخل رقم الجوال بالرمز الدولي" 
+                  assign to PhoneNo
+mandatory ask number "<b style = color:#000080> Add Pax Line Number
+            الرجاء إضافة رقم المسافر  في الحجز " assign to PAXLineNo
+                select "Select notifications language اختر لغة الإشعارات"
+                  from "Ar,En" assign to Language
+
+send "APN-SV/M+" + PhoneNo + "/" + Language + "/P" + PAXLineNo
+send "APM-" + PhoneNo //+ "/P" + Pax
+
+
+
+choose "<b>Please select next step فضلا اختيار الإجراء التالي</b>" {
+when (" Add DOCS  إضافة معلومات وثيقة السفر ") {
+              send "RTN,G"
+
+              mandatory ask number "<b style = color:##000080>Insert passenger number to add DOCS ... /P?
+              فضلا تحديد رقم المسافر ../P?"
+                assign to Pax
+              
+              
+              if (Pax >= element) {
+                  mandatory ask number "<b style = color:##000080>Incorrect number, please insert passenger number to add DOCS ... /P?
+                  الرقم المدخل غير صحيح ، فضلا تحديد رقم المسافر ../P?"
+                    assign to Pax                
+              }
+
+              choose "Select Passenger Gender" {
+                when ("Male (M)") {
+              		append "M" to Gender
+              	}
+              	when ("Female (F)") {
+              		append "F" to Gender
+              	}
+                when ("Male Infant (MI)") {
+                	append "MI" to Gender
+                }
+                when ("Female Infant (FI)") {
+                	append "FI" to Gender
+                }
+              }
+              
+                  choose "
+            <b style = color:#D40B0B>    *** SAUDIA procedure should be apply ***
+            *** يجب تطبيق جميع أنظمة وإجراءات السعودية ***</b>
+            
+<b>Select if trip international or domestic. هل الرحلة دولية أم داخلية؟</b>" {
+
+            when ("International") {
+          		append "INT" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Passport (P) جواز سفر,Naional Identity for Saudi (I) هوية وطنية للسعوديين,Other أخرى" 
+                assign to DocMainType
+          	}
+          	when ("Domestic") {
+          		append "DOM" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Naional Identity for Saudi (I) هوية وطنية للسعوديين,Identity card (A) هوية مقيم,Passport (P) جواز سفر,Other أخرى" 
+                assign to DocMainType            
+          	}
+          } // end of choose
+
+
+          if (DocMainType == "Naional Identity for Saudi (I) هوية وطنية للسعوديين") {
+            append "I" to DocType
+            append "NI" to FOIDType
+            append "SAU" to DocIssCou
+            append "SAU" to NAT
+            
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>National ID information معلومات الهوية الوطنية</h1>
+                  National ID number رقم الهوية الوطنية"
+                    assign to DocNo
+                ask date "National ID <b>expiry</b> <b>تاريخ انتهاء</b> الهوية الوطنية" 
+                  with format DDMONYY assign to DocExp
+              }
+          } // end if I
+
+          if (DocMainType == "Identity card (A) هوية مقيم") {
+            append "A" to DocType
+            append "ID" to FOIDType
+            append "SAU" to DocIssCou
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>]IQAMA Document information معلومات الإقامة</h1>
+                  IQAMA document number رقم الإقامة"
+                    assign to DocNo
+                ask date "IQAMA document <b>expiry</b> <b>تاريخ انتهاء</b> اﻹقامة"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT  
+             }
+          } // end if A
+
+
+          if (DocMainType == "Passport (P) جواز سفر") {
+            append "P" to DocType
+            append "PP" to FOIDType
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Passport information معلومات جواز السفر</h1>
+                  Passport number رقم جواز السفر" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Passport issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Passport <b>expiry</b> <b>تاريخ انتهاء</b> جواز السفر"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if passport
+
+
+          if (DocMainType == "Other أخرى") {
+            if (SI == "DOM") {
+	            append "O" to DocType
+            }
+            else {
+              mandatory ask "Document Type" assign to DocType
+            }
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Document information معلومات المستند</h1>
+                  Document number رقم المستند" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Document issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Document <b>expiry</b> <b>تاريخ انتهاء</b> المستند"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if other DocMainType
+                        
+
+
+              group {
+                mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Family Name (surname) اسم العائلة" 
+                    assign to FamilyName
+                mandatory ask "First (given) Name الاسم الأول" 
+                  assign to FirstName
+                ask "Middle name الاسم الأوسط" 
+                  assign to MidName
+                mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                  with format DDMONYY assign to DoB
+              }
+        
+          
+          
+          
+            //below added 28OCT20 by 11007400 to match procedure
+                  choose "Is this passenger the main document holder ?
+                          هل المسافر الحامل الأساسي للوثيقة ؟" {
+                    when ("Yes") {
+                    	  append "-H" to Holder
+                  	}
+                  	when ("No") {
+                  		  append "" to Holder
+                  	}
+                  }
+          
+          if (Gender == "M") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+            //if (DocMainType != "") {
+	            send "SR FOID SV HK1-" + FOIDType + DocNo + "/P" + Pax              
+            //}
+          }
+          
+          if (Gender == "F") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+            send "SR FOID SV HK1-" + FOIDType + DocNo + "/P" + Pax              
+          }
+
+          if (Gender == "MI") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+          }
+
+          if (Gender == "FI") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+          }
+        
+
+}
+
+}
+
+}
+
+
+
+        else {
+  choose "<h1 style = color:#000000>Created by :<b style = color:#A49365>Ali H.Alshabib</b></b>
+<b style = color:#000000>version no. :<b style = color:#A49365>202105270939</b></b>
+            -------------------------------------</h1>
+            
+  <b style = color:#D40B0B>*** BE SURE TO BOOK SEGMENT FOR 2 SEATS FIRST ***
+  *** الرجاء التأكد من سحب الإمكانية لعدد مقعدين أولا *** " {
+    when ("OK") {
+    	
+  	}
+  }
+  
+} //End of else of if (Seats != "")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

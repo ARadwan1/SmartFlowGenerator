@@ -1,0 +1,1177 @@
+send "IG"
+group {
+        mandatory ask "<h1 style = color:#D40B0B> Document 1</h1>
+         Document Number 1" 
+            assign to varDocumentNumber1
+        mandatory ask "TKT Amount 1" 
+          assign to varTKTAmount1
+       // mandatory ask date "Issue Date 1"
+       //   with format DDMONYY assign to varIssueDate1
+        select "Document Type 1" 
+          from "TKT,EMD" 
+          assign to varDocumentType1
+          
+      mandatory ask "<h1 style = color:#D40B0B>Document 2</h1>
+         Document Number 2" 
+            assign to varDocumentNumber2
+        mandatory ask "TKT Amount 2" 
+          assign to varTKTAmount2
+       // mandatory ask date "Issue Date 2"
+       //   with format DDMONYY assign to varIssueDate2
+        select "Document Type 2" 
+          from "TKT,EMD" 
+          assign to varDocumentType2
+          
+      select "<h1 style = color:#D40B0B>Count Of Documents To Be Gathered</h1> Select the number of document to be gathered"
+      from "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20" assign to varNumberOfDocument 
+      
+       
+      }
+      
+
+if (varDocumentType1 == "TKT"){
+  append "E1" to CPN1
+  send "TWD/TKT065-" + varDocumentNumber1
+  capture line : 3, column : 6, length : 26 assign to name
+  
+  capture line : 10, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 10, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 11, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 11, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 12, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 12, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 13, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 13, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 14, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 14, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 15, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 15, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 2, column : 35, length : 3 assign to POI
+      capture line : 2, column : 44, length : 7 assign to DOI
+      capture line : 2, column : 57, length : 8 assign to IOI
+      
+      append "First Issue" to FoPos
+      append varDocumentNumber1 + POI + DOI + "/" + IOI + "/065-" to FoString
+      
+    }}}}}}}}}}}
+
+  }
+  else{
+    append "M1" to CPN1
+    send "EWD/EMD065-" + varDocumentNumber1
+    capture line : 3, column : 6, length : 26 assign to name
+    
+    capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    
+    }else{
+      // still to be assigned later
+      }}}}}}
+    
+    
+    
+    if (varDocumentType2 == "TKT"){
+      append "E1" to CPN2
+      
+    } else{
+      append "M1" to CPN2
+      
+      }
+    
+    
+    
+    send "DF" + varTKTAmount1 + ";" + varTKTAmount2
+    
+    capture line : 2, column : 1, length : 9 assign to varTotalAmount
+    
+  //append varTKTAmount1 + varTKTAmount2 to varTotalAmount
+ 
+  send "IG"
+  send "NM1" + name
+  
+  send "IU SV NN1 MISC DMM/01NOV"
+  send "TMC"
+  send "TMI/R" + varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+  send "TMI/FP-O/GOV"
+  send "TMI/FO-065-" + FoString + varDocumentNumber1 + CPN1 + "/065-" + varDocumentNumber2 + CPN2
+  
+  send "AP;TKOK;RFP;ER"
+  send "rfp"
+  send "TTM/M1/RT"
+  
+  if(varNumberOfDocument!="1"){
+    if(varNumberOfDocument!="2"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 3 </h1> Enter the next document number" assign to varDocumentNumber3
+   mandatory ask "Enter the document price" assign to varAddTKTAmount3
+   select "Document Type 3" from "TKT,EMD" assign to varDocumentType3
+    }
+    
+    
+    if (varDocumentType3 == "TKT"){
+      append "E1" to CPN3
+      
+    } else{
+      append "M1" to CPN3
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount3
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber3 + CPN3
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+
+////////////////////////////
+
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 4 </h1> Enter the next document number" assign to varDocumentNumber4
+   mandatory ask "Enter the document price" assign to varAddTKTAmount4
+   select "Document Type 4" from "TKT,EMD" assign to varDocumentType4
+    }
+    
+    
+    if (varDocumentType4 == "TKT"){
+      append "E1" to CPN4
+      
+    } else{
+      append "M1" to CPN4
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount4
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber4 + CPN4
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 5 </h1> Enter the next document number" assign to varDocumentNumber5
+   mandatory ask "Enter the document price" assign to varAddTKTAmount5
+   select "Document Type 5" from "TKT,EMD" assign to varDocumentType5
+    }
+    
+    
+    if (varDocumentType5 == "TKT"){
+      append "E1" to CPN5
+      
+    } else{
+      append "M1" to CPN5
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount5
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber5 + CPN5
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+       if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 6 </h1> Enter the next document number" assign to varDocumentNumber6
+   mandatory ask "Enter the document price" assign to varAddTKTAmount6
+   select "Document Type 6" from "TKT,EMD" assign to varDocumentType6
+    }
+    
+    
+    if (varDocumentType6 == "TKT"){
+      append "E1" to CPN6
+      
+    } else{
+      append "M1" to CPN6
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount6
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber6 + CPN6
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 7 </h1> Enter the next document number" assign to varDocumentNumber7
+   mandatory ask "Enter the document price" assign to varAddTKTAmount7
+   select "Document Type 7" from "TKT,EMD" assign to varDocumentType7
+    }
+    
+    
+    if (varDocumentType7 == "TKT"){
+      append "E1" to CPN7
+      
+    } else{
+      append "M1" to CPN7
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount7
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber7 + CPN7
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 8 </h1> Enter the next document number" assign to varDocumentNumber8
+   mandatory ask "Enter the document price" assign to varAddTKTAmount8
+   select "Document Type 8" from "TKT,EMD" assign to varDocumentType8
+    }
+    
+    
+    if (varDocumentType8 == "TKT"){
+      append "E1" to CPN8
+      
+    } else{
+      append "M1" to CPN8
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount8
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber8 + CPN8
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 9 </h1> Enter the next document number" assign to varDocumentNumber9
+   mandatory ask "Enter the document price" assign to varAddTKTAmount9
+   select "Document Type 9" from "TKT,EMD" assign to varDocumentType9
+    }
+    
+    
+    if (varDocumentType9 == "TKT"){
+      append "E1" to CPN9
+      
+    } else{
+      append "M1" to CPN9
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount9
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber9 + CPN9
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}
+
+//////////////////////////////////////////////////////////////////////////
+
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 10 </h1> Enter the next document number" assign to varDocumentNumber10
+   mandatory ask "Enter the document price" assign to varAddTKTAmount10
+   select "Document Type 10" from "TKT,EMD" assign to varDocumentType10
+    }
+    
+    
+    if (varDocumentType10 == "TKT"){
+      append "E1" to CPN10
+      
+    } else{
+      append "M1" to CPN10
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount10
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber10 + CPN10
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 11 </h1> Enter the next document number" assign to varDocumentNumber11
+   mandatory ask "Enter the document price" assign to varAddTKTAmount11
+   select "Document Type 11" from "TKT,EMD" assign to varDocumentType11
+    }
+    
+    
+    if (varDocumentType11 == "TKT"){
+      append "E1" to CPN11
+      
+    } else{
+      append "M1" to CPN11
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount11
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber11 + CPN11
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+      if(varNumberOfDocument!="5"){
+        if(varNumberOfDocument!="6"){
+          if(varNumberOfDocument!="7"){
+            if(varNumberOfDocument!="8"){
+              if(varNumberOfDocument!="9"){
+                if(varNumberOfDocument!="10"){
+                  if(varNumberOfDocument!="11"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 12 </h1> Enter the next document number" assign to varDocumentNumber12
+   mandatory ask "Enter the document price" assign to varAddTKTAmount12
+   select "Document Type 12" from "TKT,EMD" assign to varDocumentType12
+    }
+    
+    
+    if (varDocumentType12 == "TKT"){
+      append "E1" to CPN12
+      
+    } else{
+      append "M1" to CPN12
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount12
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber12 + CPN12
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}}}}}}}}}
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 13 </h1> Enter the next document number" assign to varDocumentNumber13
+   mandatory ask "Enter the document price" assign to varAddTKTAmount13
+   select "Document Type 13" from "TKT,EMD" assign to varDocumentType13
+    }
+    
+    
+    if (varDocumentType13 == "TKT"){
+      append "E1" to CPN13
+      
+    } else{
+      append "M1" to CPN13
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount13
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber13 + CPN13
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}}}}}}}}}}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 14 </h1> Enter the next document number" assign to varDocumentNumber14
+   mandatory ask "Enter the document price" assign to varAddTKTAmount14
+   select "Document Type 14" from "TKT,EMD" assign to varDocumentType14
+    }
+    
+    
+    if (varDocumentType14 == "TKT"){
+      append "E1" to CPN14
+      
+    } else{
+      append "M1" to CPN14
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount14
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber14 + CPN14
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 15 </h1> Enter the next document number" assign to varDocumentNumber15
+   mandatory ask "Enter the document price" assign to varAddTKTAmount15
+   select "Document Type 13" from "TKT,EMD" assign to varDocumentType15
+    }
+    
+    
+    if (varDocumentType15 == "TKT"){
+      append "E1" to CPN15
+      
+    } else{
+      append "M1" to CPN15
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount15
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber15 + CPN15
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+			                      if(varNumberOfDocument!="15"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 16 </h1> Enter the next document number" assign to varDocumentNumber16
+   mandatory ask "Enter the document price" assign to varAddTKTAmount16
+   select "Document Type 16" from "TKT,EMD" assign to varDocumentType16
+    }
+    
+    
+    if (varDocumentType16 == "TKT"){
+      append "E1" to CPN16
+      
+    } else{
+      append "M1" to CPN16
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount16
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber16 + CPN16
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+			                      if(varNumberOfDocument!="15"){
+            			            if(varNumberOfDocument!="16"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 17 </h1> Enter the next document number" assign to varDocumentNumber17
+   mandatory ask "Enter the document price" assign to varAddTKTAmount17
+   select "Document Type 17" from "TKT,EMD" assign to varDocumentType17
+    }
+    
+    
+    if (varDocumentType17 == "TKT"){
+      append "E1" to CPN17
+      
+    } else{
+      append "M1" to CPN17
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount17
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber17 + CPN17
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+			                      if(varNumberOfDocument!="15"){
+            			            if(varNumberOfDocument!="16"){
+              			            if(varNumberOfDocument!="17"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 18 </h1> Enter the next document number" assign to varDocumentNumber18
+   mandatory ask "Enter the document price" assign to varAddTKTAmount18
+   select "Document Type 18" from "TKT,EMD" assign to varDocumentType18
+    }
+    
+    
+    if (varDocumentType18 == "TKT"){
+      append "E1" to CPN18
+      
+    } else{
+      append "M1" to CPN18
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount18
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber18 + CPN18
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+			                      if(varNumberOfDocument!="15"){
+            			            if(varNumberOfDocument!="16"){
+              			            if(varNumberOfDocument!="17"){
+                		              if(varNumberOfDocument!="18"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 19 </h1> Enter the next document number" assign to varDocumentNumber19
+   mandatory ask "Enter the document price" assign to varAddTKTAmount19
+   select "Document Type 19" from "TKT,EMD" assign to varDocumentType19
+    }
+    
+    
+    if (varDocumentType19 == "TKT"){
+      append "E1" to CPN19
+      
+    } else{
+      append "M1" to CPN19
+      
+      }
+    
+  send "RT"
+  
+    capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+
+send "DF" + varTotalAmount + ";" + varAddTKTAmount19
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber19 + CPN19
+send "rfp"
+send "TTM/M1/RT"
+
+}
+}
+}}}}}}}}}}}}}}}}
+
+
+//////////////////////////////////////////////////////////////////////////
+if(varNumberOfDocument!="1"){
+   if(varNumberOfDocument!="2"){
+    if(varNumberOfDocument!="3"){
+      if(varNumberOfDocument!="4"){
+          if(varNumberOfDocument!="5"){
+            if(varNumberOfDocument!="6"){
+              if(varNumberOfDocument!="7"){
+                if(varNumberOfDocument!="8"){
+                  if(varNumberOfDocument!="9"){
+                    if(varNumberOfDocument!="10"){
+            	       if(varNumberOfDocument!="11"){
+              		    if(varNumberOfDocument!="12"){
+                        if(varNumberOfDocument!="13"){
+                          if(varNumberOfDocument!="14"){
+                			      if(varNumberOfDocument!="15"){
+                            	if(varNumberOfDocument!="16"){
+                                if(varNumberOfDocument!="17"){
+                                	if(varNumberOfDocument!="18"){
+                                  	if(varNumberOfDocument!="19"){
+    group{
+   mandatory ask "<h1 style = color:#D40B0B>Document 20 </h1> Enter the next document number" assign to varDocumentNumber20
+   mandatory ask "Enter the document price" assign to varAddTKTAmount20
+   select "Document Type 20" from "TKT,EMD" assign to varDocumentType20
+    }
+    
+    
+    if (varDocumentType20 == "TKT"){
+      append "E1" to CPN20
+      
+    } else{
+      append "M1" to CPN20
+      
+      }
+    
+  send "RT"
+  
+     capture line : 5, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 5, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 6, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 6, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 7, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 7, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 8, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 8, column : 16, length : 10 assign to varIssuedEMD}
+    
+    capture line : 9, column : 5, length : 6 assign to varFAPos
+    if(varFAPos == "FA PAX"){capture line : 9, column : 16, length : 10 assign to varIssuedEMD}
+
+    send "DF" + varTotalAmount + ";" + varAddTKTAmount20
+capture line : 2, column : 1, length : 9 assign to varTotalAmount
+
+send "TMI/R"+ varTotalAmount + "/CV-" + varTotalAmount + "/W0"
+send "TMI/FO-065-" + FoString + varIssuedEMD + "M1/065-" + varDocumentNumber20 + CPN20
+send "rfp"
+send "TTM/M1/RT"
+}
+}
+}}}}}}}}}}}}}}}}}
+
+
+
+
+
+
+

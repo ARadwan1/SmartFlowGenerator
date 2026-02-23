@@ -1,0 +1,878 @@
+send "RT"
+group{
+  
+  select "<h1> Select the PAX number to reissue </h1>" from "1,2,3,4,5,6,7,8,9" assign to paxNo
+ 
+  
+  }
+
+send "TTE/ALL"
+send "FXP/R,U*NGR/PAX/P" + paxNo
+
+  capture line : 11, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 12, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 13, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 14, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 15, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 16, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 17, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 18, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 19, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+  capture line : 20, column : 13, length : 3 assign to E3Pos
+  if (E3Pos == "-E3"){ append "I" to ItnryType }
+  
+ 
+
+capture line : 12, column : 1, length : 14 assign to FareFamPos
+if (FareFamPos == "FARE FAMILIES:"){
+  capture line : 11, column : 4, length : 9 assign to totalPrice
+    
+  }else{
+        capture line : 13, column : 1, length : 14 assign to FareFamPos
+        if (FareFamPos == "FARE FAMILIES:"){
+          capture line : 12, column : 4, length : 9 assign to totalPrice
+  
+        }else{
+              capture line : 14, column : 1, length : 14 assign to FareFamPos
+              if (FareFamPos == "FARE FAMILIES:"){
+                capture line : 13, column : 4, length : 9 assign to totalPrice
+        
+              }else{
+                
+                    capture line : 15, column : 1, length : 14 assign to FareFamPos
+                    if (FareFamPos == "FARE FAMILIES:"){
+                      capture line : 14, column : 4, length : 9 assign to totalPrice
+              
+                    }else{
+                          capture line : 16, column : 1, length : 14 assign to FareFamPos
+                          if (FareFamPos == "FARE FAMILIES:"){
+                            capture line : 15, column : 4, length : 9 assign to totalPrice
+                    
+                          }else{
+                                capture line : 17, column : 1, length : 14 assign to FareFamPos
+                                if (FareFamPos == "FARE FAMILIES:"){
+                                  capture line : 16, column : 4, length : 9 assign to totalPrice
+                          
+                                }else{
+                                      capture line : 18, column : 1, length : 14 assign to FareFamPos
+                                      if (FareFamPos == "FARE FAMILIES:"){
+                                        capture line : 17, column : 4, length : 9 assign to totalPrice
+                                        
+                                        }else{
+                                              capture line : 19, column : 1, length : 14 assign to FareFamPos
+                                              if (FareFamPos == "FARE FAMILIES:"){
+                                                capture line : 18, column : 4, length : 9 assign to totalPrice
+                                        
+                                              }else{
+                                                    capture line : 20, column : 1, length : 14 assign to FareFamPos
+                                                    if (FareFamPos == "FARE FAMILIES:"){
+                                                      capture line : 19, column : 4, length : 9 assign to totalPrice
+                                              
+                                                    }else{
+                                                      
+                                                          capture line : 21, column : 1, length : 14 assign to FareFamPos
+                                                          if (FareFamPos == "FARE FAMILIES:"){
+                                                            capture line : 20, column : 4, length : 9 assign to totalPrice
+                                                    
+                                                          }else{
+                                                                capture line : 22, column : 1, length : 14 assign to FareFamPos
+                                                                if (FareFamPos == "FARE FAMILIES:"){
+                                                                  capture line : 21, column : 4, length : 9 assign to totalPrice
+                                                          
+                                                                }else{
+                                                                      capture line : 23, column : 1, length : 14 assign to FareFamPos
+                                                                      if (FareFamPos == "FARE FAMILIES:"){
+                                                                        capture line : 22, column : 4, length : 9 assign to totalPrice
+                                                                
+                                                                      }else{
+                                                                        
+                                                                        select "<h1>No Price Found you have to stop</h1>" from "Stop" assign to stop                                           
+                                      
+                                                                        
+                                                                        
+                                                                        }}}}}}}}}}}}
+                                                                        // End Of finding the price place
+
+select "How many Documents will be added for this pax" from "1,2" assign to DocCount
+
+if (DocCount == "1"){
+  group{
+  mandatory ask "<h1 style = color:#D40B0B> Document Number</h1>
+         Document Number " 
+            assign to varDocumentNumber1
+        mandatory ask "TKT Amount " 
+          assign to varTKTAmount1
+        mandatory ask "Write the highest penalty without VAT " 
+          assign to varPenalty
+        ask "Write the endorsment FE " 
+          assign to varFE
+       // mandatory ask date "Issue Date 1"
+       //   with format DDMONYY assign to varIssueDate1
+        select "Document Type " 
+          from "TKT,EMD" 
+          assign to varDocumentType1
+  
+  }
+  if (varDocumentType1 == "TKT"){
+  append "E1" to CPN1
+  send "TWD/TKT065-" + varDocumentNumber1
+  capture line : 3, column : 6, length : 26 assign to name
+  
+  capture line : 10, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 10, column : 8, length : 34 assign to FoString
+    capture line : 10, column : 21, length : 7 assign to DOI
+    capture line : 10, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 11, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 11, column : 8, length : 34 assign to FoString
+    capture line : 11, column : 21, length : 7 assign to DOI
+    capture line : 11, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 12, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 12, column : 8, length : 34 assign to FoString
+    capture line : 12, column : 21, length : 7 assign to DOI
+    capture line : 12, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 13, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 13, column : 8, length : 34 assign to FoString
+    capture line : 13, column : 21, length : 7 assign to DOI
+    capture line : 13, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 14, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 14, column : 8, length : 34 assign to FoString
+    capture line : 14, column : 21, length : 7 assign to DOI
+    capture line : 14, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 15, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 15, column : 8, length : 34 assign to FoString
+    capture line : 15, column : 21, length : 7 assign to DOI
+    capture line : 15, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    capture line : 16, column : 21, length : 7 assign to DOI
+    capture line : 16, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    capture line : 17, column : 21, length : 7 assign to DOI
+    capture line : 17, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    capture line : 18, column : 21, length : 7 assign to DOI
+    capture line : 18, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    capture line : 19, column : 21, length : 7 assign to DOI
+    capture line : 19, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    capture line : 20, column : 21, length : 7 assign to DOI
+    capture line : 20, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 2, column : 35, length : 3 assign to POI
+      capture line : 2, column : 44, length : 7 assign to DOI
+      capture line : 2, column : 44, length : 5 assign to DOIvxx
+      capture line : 2, column : 57, length : 8 assign to IOI
+      
+      append "First Issue" to FoPos
+      append varDocumentNumber1 + POI + DOI + "/" + IOI + "/065-" to FoString
+      
+    }}}}}}}}}}}
+
+  }
+  else{
+    append "M1" to CPN1
+    send "EWD/EMD065-" + varDocumentNumber1
+    capture line : 3, column : 6, length : 26 assign to name
+    
+    capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    capture line : 16, column : 21, length : 7 assign to DOI
+    capture line : 16, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    capture line : 17, column : 21, length : 7 assign to DOI
+    capture line : 17, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    capture line : 18, column : 21, length : 7 assign to DOI
+    capture line : 18, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    capture line : 19, column : 21, length : 7 assign to DOI
+    capture line : 19, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    capture line : 20, column : 21, length : 7 assign to DOI
+    capture line : 20, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      // still to be assigned later
+      }}}}}}
+    
+    
+  send "df"+totalPrice + "-" + varTKTAmount1
+  capture line : 2, column : 1, length : 9 assign to varRemainingValue
+  append  "FO065-" + FoString + varDocumentNumber1 + CPN1 to FoEntry
+  append  "TMI/ALL/FO-065-" + FoString + varDocumentNumber1 + CPN1 to TMIFoEntry
+  
+  
+  }else{//If 2 Document====================================================================================================
+    group{
+        mandatory ask "<h1 style = color:#D40B0B> Document 1 </h1> Document Number 1" assign to varDocumentNumber1
+        mandatory ask "<h2>TKT Amount 1 (must be the oldest)</h2>" assign to varTKTAmount1
+        select "Document Type 1" from "TKT,EMD" assign to varDocumentType1  
+       // mandatory ask date "Issue Date 1"
+       //   with format DDMONYY assign to varIssueDate1
+        
+           
+          
+          
+      mandatory ask "<h1 style = color:#D40B0B>Document 2</h1> Document Number 2" assign to varDocumentNumber2
+      mandatory ask "TKT Amount 2" assign to varTKTAmount2
+      select "Document Type 2" from "TKT,EMD" assign to varDocumentType2
+      // mandatory ask date "Issue Date 2"
+      //   with format DDMONYY assign to varIssueDate2
+      
+          
+      mandatory ask "Write the highest penalty without VAT " assign to varPenalty   
+      ask "Write the endorsment FE " assign to varFE
+          
+       
+        
+          
+          
+    }
+    if (varDocumentType1 == "TKT"){
+  append "E1" to CPN1
+  send "TWD/TKT065-" + varDocumentNumber1
+  capture line : 3, column : 6, length : 26 assign to name
+  
+  capture line : 10, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 10, column : 8, length : 34 assign to FoString
+    capture line : 10, column : 21, length : 7 assign to DOI
+    capture line : 10, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 11, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 11, column : 8, length : 34 assign to FoString
+    capture line : 11, column : 21, length : 7 assign to DOI
+    capture line : 11, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 12, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 12, column : 8, length : 34 assign to FoString
+    capture line : 12, column : 21, length : 7 assign to DOI
+    capture line : 12, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 13, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 13, column : 8, length : 34 assign to FoString
+    capture line : 13, column : 21, length : 7 assign to DOI
+    capture line : 13, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 14, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 14, column : 8, length : 34 assign to FoString
+    capture line : 14, column : 21, length : 7 assign to DOI
+    capture line : 14, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 15, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 15, column : 8, length : 34 assign to FoString
+    capture line : 15, column : 21, length : 7 assign to DOI
+    capture line : 15, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    capture line : 16, column : 21, length : 7 assign to DOI
+    capture line : 16, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    capture line : 17, column : 21, length : 7 assign to DOI
+    capture line : 17, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    capture line : 18, column : 21, length : 7 assign to DOI
+    capture line : 18, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    capture line : 19, column : 21, length : 7 assign to DOI
+    capture line : 19, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    capture line : 20, column : 21, length : 7 assign to DOI
+    capture line : 20, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 2, column : 35, length : 3 assign to POI
+      capture line : 2, column : 44, length : 7 assign to DOI
+      capture line : 2, column : 44, length : 5 assign to DOIvxx
+      capture line : 2, column : 57, length : 8 assign to IOI
+      
+      append "First Issue" to FoPos
+      append varDocumentNumber1 + POI + DOI + "/" + IOI + "/065-" to FoString
+      
+    }}}}}}}}}}}
+
+  }
+  else{// if EMD
+    append "M1" to CPN1
+    send "EWD/EMD065-" + varDocumentNumber1
+    capture line : 3, column : 6, length : 26 assign to name
+    
+    capture line : 16, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString
+    capture line : 16, column : 21, length : 7 assign to DOI
+    capture line : 16, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString
+    capture line : 17, column : 21, length : 7 assign to DOI
+    capture line : 17, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString
+    capture line : 18, column : 21, length : 7 assign to DOI
+    capture line : 18, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString
+    capture line : 19, column : 21, length : 7 assign to DOI
+    capture line : 19, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos
+  if(FoPos == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString
+    capture line : 20, column : 21, length : 7 assign to DOI
+    capture line : 20, column : 21, length : 5 assign to DOIvxx
+    
+    }else{
+      // still to be assigned later
+      }}}}}}
+    
+    
+    // the seconf document===================
+    if (varDocumentType2 == "TKT"){
+  append "E1" to CPN2
+  send "TWD/TKT065-" + varDocumentNumber2
+  capture line : 3, column : 6, length : 26 assign to name2
+  
+  capture line : 10, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 10, column : 8, length : 34 assign to FoString2
+    capture line : 10, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 11, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 11, column : 8, length : 34 assign to FoString2
+    capture line : 11, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 12, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 12, column : 8, length : 34 assign to FoString2
+    capture line : 12, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 13, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 13, column : 8, length : 34 assign to FoString2
+    capture line : 13, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 14, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 14, column : 8, length : 34 assign to FoString2
+    capture line : 14, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 15, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 15, column : 8, length : 34 assign to FoString2
+    capture line : 15, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 16, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString2
+    capture line : 16, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString2
+    capture line : 17, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString2
+    capture line : 18, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString2
+    capture line : 19, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString2
+    capture line : 20, column : 21, length : 7 assign to DOI2
+    
+    
+    }else{
+      capture line : 2, column : 35, length : 3 assign to POI2
+      capture line : 2, column : 44, length : 7 assign to DOI2
+      capture line : 2, column : 57, length : 8 assign to IOI2
+      
+      append "First Issue" to FoPos2
+      append varDocumentNumber2 + POI2 + DOI2 + "/" + IOI2 + "/065-" to FoString2
+      
+    }}}}}}}}}}}
+    
+  }
+  else{
+    append "M1" to CPN2
+    send "EWD/EMD065-" + varDocumentNumber2
+    capture line : 3, column : 6, length : 26 assign to name2
+    
+    capture line : 16, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 16, column : 8, length : 34 assign to FoString2
+    capture line : 16, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 17, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 17, column : 8, length : 34 assign to FoString2
+    capture line : 17, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 18, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 18, column : 8, length : 34 assign to FoString2
+    capture line : 18, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 19, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 19, column : 8, length : 34 assign to FoString2
+    capture line : 19, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      capture line : 20, column : 1, length : 7 assign to FoPos2
+  if(FoPos2 == "FO 065-"){
+    capture line : 20, column : 8, length : 34 assign to FoString2
+    capture line : 20, column : 21, length : 7 assign to DOI2
+    
+    }else{
+      // still to be assigned later
+      }}}}}}
+  
+    send "df"+totalPrice + "-" + varTKTAmount1 + "-" + varTKTAmount2
+    capture line : 2, column : 1, length : 9 assign to varRemainingValue
+    append  "FO065-" + FoString + varDocumentNumber1 + CPN1 + "/065-" + varDocumentNumber2 + CPN2 to FoEntry
+    append  "TMI/ALL/FO-065-" + FoString + varDocumentNumber1 + CPN1 + "/065-" + varDocumentNumber2 + CPN2 to TMIFoEntry
+    
+  }
+  
+  capture line : 2, column : 1, length : 1 assign to varNumberSign
+  if (varDocumentNumber1 != varDocumentNumber2){
+    send "df"+varPenalty + "*0.15"
+    capture line : 2, column : 1, length : 9 assign to penVAT
+    
+    if (varNumberSign != "-"){
+      
+      // "Positive" no residual value
+
+      if (varPenalty!="0"){ // if with penalty
+      
+      send "RT"
+      append "noIU" to IUExist
+      capture line : 5, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 6, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 7, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 8, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 9, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 10, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 11, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 12, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 13, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 14, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }
+      }}}}}}}}}
+      if (IUExist != "noIU"){select "There is IU sector ,<h1 style = color:#D40B0B> STOP </h1>  the flow and remove the SVC sector" from "Continue any way" assign to noIU}
+      
+        if (varNumberSign != "0"){ // if there will be additional
+            send "TTK/EXCH"
+            send "TTK/VXX" + DOIvxx
+            send "TTK/TSAR" + varRemainingValue
+            ask "Write the form of payment for the additional only" assign to FpAdd
+            send "IU SV NN1 PENF DMM/01NOV/P"+paxNo
+            send "TMC"
+            if (ItnryType != "I"){
+              send "TMI/F"+varPenalty+"/CV-"+varPenalty+"/X"+penVAT+"K7/FP-"+FpAdd
+            }else{
+              send "TMI/F"+varPenalty+"/CV-"+varPenalty+"/FP-"+FpAdd  
+            }
+            send "FE"+varFE
+            send "TMI/ALL/FE-"+varFE
+            capture line : 1, column : 6, length : 3 assign to TMCno
+            capture line : 4, column : 79, length : 2 assign to IULno
+            send "fpo/GTR+/" + FpAdd
+            send FoEntry
+            
+        } else{  // if there will not be additional
+            send "TTK/EXCH"
+            send "TTK/VXX" + DOIvxx
+            ask "Write the form of payment for the additional only" assign to FpAdd
+            send "IU SV NN1 PENF DMM/01NOV/P"+paxNo
+            send "TMC"
+            if (ItnryType != "I"){
+              send "TMI/F"+varPenalty+"/CV-"+varPenalty+"/X"+penVAT+"K7/FP-"+FpAdd
+            }else{
+              send "TMI/F"+varPenalty+"/CV-"+varPenalty+"/FP-"+FpAdd  
+            }
+            send "FE"+varFE
+            send "TMI/ALL/FE-"+varFE
+            send "fpo/GTR"
+            send FoEntry
+        }
+      } else{ // if without penalty
+          if (varNumberSign != "0"){ // if there will be additional
+            send "TTK/EXCH"
+            send "TTK/VXX" + DOIvxx
+            send "TTK/TSAR" + varRemainingValue
+            ask "Write the form of payment for the additional only" assign to FpAdd
+            send "FE"+varFE
+            send "fpo/GTR+/" + FpAdd
+            send FoEntry
+        } else{  // if there will not be additional
+            send "TTK/EXCH"
+            send "TTK/VXX" + DOIvxx // ====== I have to fix this===========
+            send "FE-"+varFE
+            send "fpo/GTR"
+            send FoEntry
+        }
+        
+        }
+
+      
+      
+      
+      
+      
+      }else{
+        
+        
+        
+        // "Nigative" with residual value
+       send "RT"
+      append "noIU" to IUExist
+      capture line : 5, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 6, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 7, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 8, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 9, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 10, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 11, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 12, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 13, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }else{
+      
+      capture line : 14, column : 5, length : 3 assign to SVCPos
+      if (SVCPos == "SVC"){ append "IU" to IUExist }
+      }}}}}}}}}
+      if (IUExist != "noIU"){select "There is IU sector , <h1 style = color:#D40B0B> STOP </h1> the flow and remove the SVC sector" from "Continue any way" assign to noIU}
+      
+        if (ItnryType != "I"){
+                send "df"+varRemainingValue + "*-1-" + varPenalty + "-" + penVAT // I have to check this above
+                capture line : 2, column : 1, length : 9 assign to RSVT
+                capture line : 2, column : 1, length : 1 assign to RsvtSign
+                append "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W0/O"+penVAT+"K7" to PenfTMI
+              }else{
+                send "df"+varRemainingValue + "*-1-" + varPenalty // I have to check this above
+                capture line : 2, column : 1, length : 9 assign to RSVT
+                capture line : 2, column : 1, length : 1 assign to RsvtSign
+                append "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W0" to PenfTMI
+              }
+        
+        
+          
+        
+        
+        
+      if (varPenalty!="0"){ // if with penalty
+        if (RsvtSign!="0"){ // if the RSVT + Or - Total TKT Amout
+          
+          if (RsvtSign != "-"){ // if the RSVT > the total amount
+              send "TTK/EXCH"
+              send "TTK/VXX" + DOIvxx
+              send "IU SV NN1 PENF DMM/01NOV/P"+paxNo
+              send "TMC"
+              
+              capture line : 1, column : 6, length : 3 assign to TMCno
+              capture line : 4, column : 79, length : 2 assign to IULno
+              
+              send "df1;"+TMCno
+              capture line : 2, column : 1, length : 3 assign to NextTMCno
+              send "df1;"+IULno
+              capture line : 2, column : 1, length : 1 assign to NextIULno
+              
+              send PenfTMI
+              
+              
+              
+              
+              send "IU SV NN1 RSVT DMM/01NOV/P"+paxNo
+              send "TMC/L"+ NextIULno
+              
+              
+              send "TMI/M"+ NextTMCno +"/R"+RSVT+"/CV-"+RSVT+"/W0"
+             
+               
+              send "FE"+varFE
+              send "TMI/ALL/FE-"+varFE
+              
+              
+              
+              
+              send "fpo/GTR"
+              send "TMI/ALL/FP-O/GTR"
+              send FoEntry
+              send TMIFoEntry
+              
+          } else{  // if the RSVT < total amount
+              
+              send "df-1*"+RSVT
+              capture line : 2, column : 1, length : 3 assign to RSVTAdd
+              
+              send "TTK/EXCH"
+              send "TTK/VXX" + DOIvxx
+              send "IU SV NN1 PENF DMM/01NOV/P"+paxNo
+              send "TMC"
+              
+              
+              
+              
+              if (ItnryType != "I"){
+                send "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W"+ RSVTAdd +"/O"+penVAT+"K7"
+              }else{
+                send "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W"+ RSVTAdd
+              }
+              
+             
+               
+              send "FE"+varFE
+              send "TMI/ALL/FE-"+varFE
+              
+              
+              
+              ask "Write the form of payment for the additional only" assign to FpAdd
+              send "fpo/GTR"
+              send "TMI/ALL/FP-O/GTR+/"+FpAdd
+              send FoEntry
+              send TMIFoEntry
+          }
+      } else{ // if No RSVT is exist but full reissue PENF
+            
+              send "TTK/EXCH"
+              send "TTK/VXX" + DOIvxx
+              
+              send "IU SV NN1 PENF DMM/01NOV/P"+paxNo
+              send "TMC"
+                        
+              
+              
+              if (ItnryType != "I"){
+                send "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W0/O"+penVAT+"K7"
+              }else{
+                send "TMI/R"+varPenalty+"/CV-"+varPenalty+"/W0"
+              }
+
+              send "FE"+varFE
+              send "fpo/GTR"
+              send FoEntry
+              send TMIFoEntry
+            }
+      }else{ // if without PNF
+      
+          
+          send "df"+varRemainingValue + "*-1" // I have to check this above
+          capture line : 2, column : 1, length : 9 assign to RSVT
+          capture line : 2, column : 1, length : 1 assign to RsvtSign
+            
+          if (RsvtSign!="0"){ // if the RSVT > 0
+          
+          
+              send "TTK/EXCH"
+              send "TTK/VXX" + DOIvxx
+              send "IU SV NN1 RSVT DMM/01NOV/P"+paxNo
+              send "TMC"
+              
+                         
+              send "TMI/R"+RSVT+"/CV-"+RSVT+"/W0"
+               
+              send "FE"+varFE
+              send "TMI/ALL/FE-"+varFE
+              
+              
+              
+              
+              send "fpo/GTR"
+              send "TMI/ALL/FP-O/GTR"
+              send FoEntry
+              send TMIFoEntry
+              
+          
+      } else{ // if No RSVT = 0
+            
+              send "TTK/EXCH"
+              send "TTK/VXX" + DOIvxx
+              
+              
+
+              send "FE"+varFE
+              send "fpo/GTR"
+              send FoEntry
+            }
+          
+        
+        
+        }
+        
+        }
+        
+
+      
+      send "RFP"
+      send "TTP/TKT/P" + paxNo
+ 
+}else{ 
+  select "<h2>Both documents have the same number, you have to restart the flow</h2>" from "Stop" assign to stop
+  } // must be the end of the flow becuse I didn't find a way to stop the flow in the middle of it.
+
+

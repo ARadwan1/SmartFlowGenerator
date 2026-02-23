@@ -1,0 +1,896 @@
+amadeus.com  
+Productivity Suite
+For Selling Platform Connect
+User Guide
+
+
+YOUR USE OF THIS DOCUMENTATION IS SUBJECT TO THESE TERMS
+Use of this documentation
+You are authorised to view, copy, or print the documentation for your personal use only.
+The content included in the documentation may not be sold, transferred, redistributed, retransmitted, published or commercially exploited in any way without the
+express advance written permission of Amadeus.
+This documentation is provided on an “AS IS” basis and Amadeus makes no representations or warranties regarding the content of the documentation, and
+hereby disclaims all warranties, including without limitations, those of accuracy, non-infringement, condition, merchantability and fitness for a particular purpose.
+Also, Amadeus does not provide any maintenance or support in using this documentation.
+Data ownership
+This documentation and all related Intellectual Property rights are the exclusive property of Amadeus. A limited licence is hereby granted to you to use the
+documentation and the related Intellectual Property rights for the sole purpose indicated above. You acknowledge that the documentation contains valuable
+information which constitutes Intellectual Property of Amadeus and that if you use, modify or distribute the documentation for unauthorised purposes, you will be
+liable to Amadeus for any damages it may suffer.
+The examples in this document are for illustrative purposes only. The naming of particular airlines, hotels, car rental agencies, or other companies in these
+examples does not constitute an endorsement, express or implied, of Amadeus by these companies or of these companies by Amadeus.
+Product offers, prices, terms and other information provided herein are subject to change without notice. You should determine the appropriateness of any
+product for your intended purpose and needs
+© 2025 Amadeus s.a.s - All Rights Reserved.
+For Amadeus Selling Platform Connect 28.2
+FE N/A
+Published by:
+Customer Learning Services
+servicehub.travelchannels@amadeus.com
+April 2025
+ 
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+3
+Contents
+Before you start
+5
+What's New
+5
+1. Getting started with Productivity Suite
+6
+What is Productivity Suite?
+6
+How to access Productivity Suite
+6
+What user roles are available in Productivity Suite?
+7
+Explanation: main list page
+7
+How is credit card information stored in Productivity Suite?
+8
+2. Sharing items in productivity suite
+9
+What is sharing?
+9
+What are the prerequisites for sharing?
+9
+Which items can be shared?
+9
+How to view the sharing status of an item
+9
+How to share or stop sharing an item
+10
+3. Smart Flows
+11
+What is the Smart Flows tool?
+11
+What are the prerequisites for accessing Smart Flows?
+11
+How to access Smart Flows
+11
+How to create and manage Smart Flows
+11
+What are the two types of editor in Smart Flows?
+12
+What is the Smart Flow advanced language?
+12
+Running and stopping Smart Flows
+12
+4. Smart Triggers
+16
+What is the Smart Triggers tool?
+16
+What are the prerequisites for accessing Smart Triggers?
+16
+How to access Smart Triggers
+16
+What are the different types of Smart Triggers?
+17
+How to create and manage Smart Triggers
+18
+How to run a script
+18
+5. Smart Key Translation
+20
+What is the Smart Key Translator?
+20
+How to access the Smart Key Translator
+20
+Translating smart keys to Smart Flows
+20
+6. Quality Monitor
+23
+What is Quality Monitor?
+23
+What is the Quality Monitor editor?
+23
+What is the Quality Monitor language?
+23
+What are the prerequisites for accessing Quality Monitor?
+23
+How to access Quality Monitor
+23
+How to create and use Quality Monitor rules
+23
+7. Using autocomplete
+25
+What is autocomplete?
+25
+Productivity Suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+4
+Where can I find information on autocomplete?
+25
+How to display autocomplete
+25
+How to select a proposed statement in autocomplete
+25
+How does autocomplete work with insert variables?
+25
+How to display autocomplete for insert variables
+26
+How to exit autocomplete
+26
+Reference: Smart Flow statements supported by autocomplete
+26
+Reference: Quality Monitor statements supported by autocomplete
+28
+8. Adding missing elements using file finishing
+30
+What is file finishing?
+30
+When are file finishing rules executed?
+30
+What are the prerequisites for managing file finishing rules?
+31
+How to access file finishing rules management
+31
+How to create and use file finishing rules
+31
+Productivity Suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+5
+Before you start
+Purpose of this guide
+This guide explains how to use the Productivity Suite in Amadeus Selling Platform Connect.
+Audience
+This document is intended for travel agents.
+Latest version of this guide
+ 1. Go to the following link:  
+https://servicehub.amadeus.com/c/portal/view-solution/8530404/en_US/
+ 2. If you are asked to log in, select  .
+If you are a new user, click Register to get access to Amadeus Service Hub.
+ 3. To print, download or view the guide in full screen, click 
+.
+ 4. To receive alerts each time that the page is updated, click 
+.
+To set notification preferences, click your name at the top of the screen, then select 
+My account > Subscriptions and notifications.
+Feedback on this guide
+Your feedback is important, and it will help us to improve this document.
+Email  your comments and suggestions to: servicehub.travelchannels@amadeus.com
+What's New
+Release
+New or Changed Features
+26.1
+The menu bar of Selling Platform Connect has been redesigned for better user 
+experience.
+N/A
+Jan 2023
+ l This is a new standalone guide. Its content is split off from the Amadeus Selling 
+Platform Connect user guide.
+ l To avoid duplicate and outdated information, sections on how to create and 
+manage Smart Flows, Smart Triggers, Quality Monitor rules and File Finishing 
+rules respectively have been removed from this guide.
+You can find the related information in the following guides:
+ o Smart Flows guide.
+ o Smart Triggers guide.
+ o Quality Monitor guide.
+ o File Finishing guide.
+Productivity Suite
+Before you start
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+6
+1. Getting started with Productivity Suite
+What is Productivity Suite?
+Productivity Suite is a suite of tools that increases the quality of the booking file (or PNR in 
+cryptic mode) by streamlining the overall booking flow. Each tool can be activated or 
+deactivated individually, which means each agency can choose only the tools it requires.
+Productivity Suite consists of the following tools:
+Tool
+Information on how to use
+Smart Flows
+See Smart Flows on page 11
+Smart Triggers
+See Smart Triggers on page 16
+Quality Monitor
+See Quality Monitor on page 23
+Smart Key Translation
+See Smart Key Translation on page 20
+Using autocomplete
+See Using autocomplete on page 25
+File Finishing
+See Adding missing elements using file finishing on page 30
+How to access Productivity Suite
+In the Main page navigation menu, select Tools > Productivity Suite.
+Productivity Suite
+1. Getting started with Productivity Suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+7
+What user roles are available in Productivity Suite?
+Role
+Description
+User
+This role is assigned by default to any agent who requires access to Selling Platform 
+Connect.
+Any user can perform the following actions with Productivity Suite tools:
+ l Run Smart Flows.
+ l Create and manage personal Smart Flows.
+Office 
+Administrator
+This role is assigned specifically to an office administrator.
+An office administrator can perform the following actions with Productivity Suite 
+tools:
+ l Create and manage personal and office Smart Flows.
+ l Share or stop sharing items.
+An office administrator can be granted the rights to manage all the Productivity Suite 
+tools or to manage individual tools only.
+Explanation: main list page
+The Main List page is the default page for each Productivity Suite tool. It displays all the items 
+that have been created at user or office level.
+For each item, the Created in column shows the office in which the item was created. Items can 
+be shared with other offices. For more information, see Sharing items in productivity suite on 
+page 9.
+You can sort the columns in the list by clicking the title bars. The buttons at the bottom allow 
+you to manage items, depending on the tool you are using.
+Productivity Suite
+1. Getting started with Productivity Suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+8
+Example: Main list page for Smart Flows
+If you are an office administrator, the Switch to Sharing View link is also displayed at the 
+bottom of the list of office-level items.
+How is credit card information stored in Productivity Suite?
+Credit card information is stored in a non-encrypted format. Therefore, you should not add 
+credit card numbers to any content in Productivity Suite.
+Some Smart Flows accept input during run time. If the required input is a credit card number, 
+this information is sent to the central system and encrypted immediately.
+However, you should not store any credit card number as source code of the Smart Flow 
+because this is not encrypted.
+Productivity Suite
+1. Getting started with Productivity Suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+9
+2. Sharing items in productivity suite
+What is sharing?
+Sharing allows Productivity Suite items to be shared between offices.
+What are the prerequisites for sharing?
+You must be the office administrator for all the offices that want to share an item.
+Which items can be shared?
+You can share office-level  Smart Flows.
+Sharing restrictions
+ l An item can only be shared and edited from the office in which it was created.
+ l After it is shared, an item cannot be renamed.
+Activating and deactivating shared items
+If applicable, you can activate and deactivate a shared item in an individual office without 
+affecting its status (active or deactivated) in the other offices.
+Deleting shared items
+ l You can only delete a shared item from the office where it was created.
+If a sharing office does not want to use the shared item, it can be deactivated or hidden in 
+that office.
+ l When a shared item is deleted, it is deleted in all the offices that share it.
+How to view the sharing status of an item
+ 1. In the Main List page, click Switch to Sharing View.
+For each item in the list:
+ o The Created in column shows the office in which the item was created.
+ o The Shared with column shows the office with which the item is currently shared or the 
+number of sharing offices, when there is more than one.
+ 2. Click Back to Managing View to return to the Main List page.
+Productivity Suite
+2. Sharing items in productivity suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+10
+How to share or stop sharing an item
+ 1. Select the item that you want to share on the Main List page.
+You must have created the item that you want to share or stop sharing.
+ 2. Click Switch to Sharing View.
+ 3. Select or clear the offices that you want to share or stop sharing the item with.
+These are all the offices to which you currently have login access.
+ 4. To filter the list of offices displayed, use the Filter field.
+ 5. To confirm your selection, click Save Changes.
+ 6. Click Back to Managing View to return to the Main List page.
+Productivity Suite
+2. Sharing items in productivity suite
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+11
+3. Smart Flows
+What is the Smart Flows tool?
+The Smart Flows tool allows a user or office administrator to build and launch predefined, 
+customisable workflows.
+Smart Flows are triggered on request to help users complete repetitive booking and fulfilment 
+tasks.
+You can create Smart Flows at the following levels:
+ l Personal
+The Smart Flow is only available to the user who creates it. Any user can create and edit a 
+personal Smart Flow.
+ l Office
+The Smart Flow can be made available to other users in the same office. You must have the 
+office administrator role to create, share and edit an office Smart Flow.
+What are the prerequisites for accessing Smart Flows?
+The optional Productivity Suite module must be activated by a site parameter before you can 
+access Smart Flows.
+How to access Smart Flows
+ 1. In the navigation menu, expand the Tools submenu.
+ 2. Select Productivity Suite > Smart Flows.
+How to create and manage Smart Flows
+See the Smart Flows guide for more information.
+Productivity Suite
+3. Smart Flows
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+12
+What are the two types of editor in Smart Flows?
+ l Smart Flow Editor
+This editor  is available to users and office administrators.
+It allows you to enter cryptic commands and easily add questions and variables to these 
+commands.
+ l Advanced Language Editor
+This editor  is only available to office administrators. 
+It allows you to create a Smart Flow using a specific language defined for Smart Flows. For 
+more information, see What is the Smart Flow advanced language? below.
+You can also test a Smart Flow directly from the Advanced Language Editor before saving it. 
+See How to Test a Smart Flow.
+Switching between editors
+You can only switch between editors if you are an office administrator.
+When you first create a new Smart Flow that has not yet been saved, you can switch from the 
+Smart Flow Editor to the Advanced Language Editor by clicking on the Advanced Language 
+Editor link. Provided you have not saved any changes in the Advanced Language Editor, you 
+can undo the switch and return to the Smart Flow Editor by clicking on Undo Changes and Go 
+Back to Smart Flow Editor. However, you will lose any changes you made in the Advanced 
+Language Editor.
+When you reopen an existing Smart Flow, it opens in the editor that it was last saved in. If it 
+opens in the Advanced Language Editor, you can no longer switch between editors.
+What is the Smart Flow advanced language?
+The Smart Flow advanced language is a logical syntax language that is compiled by structuring 
+specific statements in basic sentence format. It is used to create Smart Flows in the Advanced 
+Language Editor, and it is an alternative to the default Smart Flow Editor that uses commands 
+to build Smart Flows.
+You can only use the Smart Flow advanced language using the Advanced Language Editor if 
+you are an office administrator.
+For more information about using the Smart Flow advanced language, see Reference: Smart 
+Flow Advanced Language Syntax.
+Running and stopping Smart Flows
+How to run a Smart Flow
+ 1. Make sure you have opened the booking file.
+ 2. In the menu bar, click Smart Flows.
+Productivity Suite
+3. Smart Flows
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+13
+If you have both personal and office Smart Flows, these are shown.
+ 3. From the list of predefined workflows, select the one you want to run.
+What happens when you run a Smart Flow?
+ l If the Smart Flow contains questions or instructions, you can enter the responses in the 
+Smart Flow dialog box using free text. If there is a list of options to choose from, you can 
+select the correct response using the keyboard or mouse.
+ l The commands that are sent by the Smart Flow are echoed in the Command Page.
+ l If several booking files are open when you run a Smart Flow, the Smart Flow only affects the 
+current booking file.
+ l When you run a Smart Flow from graphic mode, the cryptic response is displayed in the 
+Command Page Output section of the Smart Flow dialog box. This cryptic display is read-
+only and cannot be edited.
+ l You can expand or collapse this Command Page Output section using the Expand and 
+Collapse arrows.
+Productivity Suite
+3. Smart Flows
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+14
+Command page output section of Smart Flow window
+ l If there is more than one page of Command Page Output, you can use the Previous Page 
+and Next Page options to navigate from one page to another.
+Navigation links in command page output
+ l You can use the Retrieve (RT) button to view PNR elements while the Smart Flow is running.
+ l To launch a corrective cryptic command  while a Smart Flow is running:
+ o Enter the command in the cryptic input field in Command Page Output.
+ o Click Go to launch the command.
+ l When a cryptic command is not supported, an error message appears, showing how to find 
+the list of supported commands.
+Error message when command not supported
+How to stop a Smart Flow
+ 1. Run a Smart Flow. 
+A prompt appears to confirm that the selected Smart Flow is running.
+ 2. Click Stop or the 
+ icon.
+Productivity Suite
+3. Smart Flows
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+15
+You can only stop a Smart Flow when there is a prompt available.
+Productivity Suite
+3. Smart Flows
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+16
+4. Smart Triggers
+What is the Smart Triggers tool?
+Smart Triggers is a tool that launches extensions such as scripts or Smart Flows in Selling 
+Platform Connect. For example, a Smart Trigger can be a rule that triggers the launch of a script 
+when a certain command is entered in the prompt of the Command Page. 
+The different types of extensions that can be run are: 
+ l Smart Flows
+ l Plus scripts
+ l Server-side scripts
+ l Smart Tools
+Smart Flows and server-side scripts are advanced options that must be enabled by a site 
+parameter.
+You must be an office administrator to define rules using the Smart Triggers tool.
+What are the prerequisites for accessing Smart Triggers?
+The optional Productivity Suite module must be activated by a site parameter before you can 
+access Smart Triggers.
+How to access Smart Triggers
+ 1. In the navigation menu, expand the Tools submenu.
+ 2. Select Productivity Suite > Smart Triggers.
+Productivity Suite
+4. Smart Triggers
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+17
+What are the different types of Smart Triggers?
+Smart Trigger Type
+Description
+Smart trigger on 
+command match
+These Smart Triggers are used to launch a script instead of the standard 
+response of a cryptic command.
+They intercept the command and launch the script.
+There is no response match on these Smart Triggers because there is no 
+response from the Amadeus central system.
+Smart trigger on 
+response match
+These Smart Triggers are used to launch a script in addition to the standard 
+response of a cryptic command.
+They do not intercept the command but launch the script in addition to the 
+result of the cryptic command.
+When creating this trigger type, the cryptic commands are filtered depending 
+on response type and response match.
+For more information see Explanation: Smart Trigger Editor Fields.
+You can also create a Smart Trigger that combines both types of trigger: command match and 
+response match.
+In the following example, the Smart Trigger intercepts any cryptic command beginning with 
+NM. If the response in the Command Page contains the words INVALID FORMAT, the Smart 
+Trigger launches an office Smart Flow to help the user add a passenger using the correct 
+format.
+Productivity Suite
+4. Smart Triggers
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+18
+In this example, the command and response matches have been successfully tested using the 
+Test this command and Test this response options.
+How to create and manage Smart Triggers
+See the Smart Triggers guide for more information.
+How to run a script
+ 1. Make sure you have opened the booking file.
+ 2. In the menu bar, click Apps.
+ 3. From the list of predefined scripts, select the one you want to run.
+Productivity Suite
+4. Smart Triggers
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+19
+Productivity Suite
+4. Smart Triggers
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+20
+5. Smart Key Translation
+What is the Smart Key Translator?
+The Smart Key Translator allows you to translate Smart Keys from Amadeus Selling Platform to 
+personal or office Smart Flows in Selling Platform Connect.
+Any user can save Smart Key translations as personal Smart Flows but you must be an office 
+administrator to save Smart Key translations as office Smart Flows. 
+How to access the Smart Key Translator
+Expand the Tools submenu and click Smart Key Translation.
+Translating smart keys to Smart Flows
+How to translate a smart key to a Smart Flow
+ 1. Copy the Smart Key that you want to translate and paste it in the Smart Key to Translate 
+column of the Smart Key Translator.
+ 2. Click Translate.
+The Smart Key appears as a Smart Flow in the Translated Smart Flow column and it can be 
+edited if needed.
+ 3. You can copy the translated Smart Flow either to a new personal Smart Flow or a new office 
+Smart Flow using a Copy to New memory button. The previous selection is retained and 
+displayed on the memory button for the duration of the session. To display the copy options, 
+click the drop-down arrow on the Copy to New memory button.
+You must be an office administrator to copy a translated Smart Flow to a new office Smart 
+Flow.
+ a. To copy to a new personal Smart Flow, click Copy to New Personal Smart Flow.
+The Advanced Language Editor opens and displays the personal Smart Flow.
+ b. To copy to a new office Smart Flow, click Copy to New Office Smart Flow.
+The Advanced Language Editor opens and displays the office Smart Flow.
+ 4. Click Save.
+Productivity Suite
+5. Smart Key Translation
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+21
+What if the smart key does not contain command code?
+If you are translating a Smart Key that does not contain any command code and contains only 
+text, insert the Smart Key between the append.... to commandline syntax. 
+The value inserted between 'append' and 'to' is placed in the command line while waiting to be 
+modified or executed.
+Append to... command line
+Reference: which smart keys can be translated to Smart Flows
+Command Code
+Command Description
+<SEND
+<send
+Send command
+<?
+Prompt action
+Productivity Suite
+5. Smart Key Translation
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+22
+Command Code
+Command Description
+<CHOOSE
+<choose
+Choose command
+<@
+Use variable
+<TODAY>
+<today>
+Today date value
+<SET>
+<set>
+Paste the save value
+<GET>
+<get>
+Copy selected text
+<REPEAT UNTIL
+<repeat until
+Repeat until instruction
+<*
+Add a comment
+<IF THEN ELSE>
+<if then else>
+If then else instruction
+[
+Optional prompt
+<%
+Add an embedded Smart Key
+ 
+Productivity Suite
+5. Smart Key Translation
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+23
+6. Quality Monitor
+What is Quality Monitor?
+Quality Monitor uses rules, defined by an office administrator, to check that the booking file 
+complies with the correct booking process. It displays blocking, warning and information 
+messages that prompt the user to apply corrections before completing a booking.
+Quality Monitor is executed when the user:
+ l Enters a cryptic command or its equivalent graphical action that is defined in a rule as a 
+trigger for Quality Monitor checks.
+Or:
+ l Clicks Check All in the Quality Monitor checklist.
+What is the Quality Monitor editor?
+The Quality Monitor Editor is used to create and edit rules and add checks to these rules. You 
+can also activate and deactivate rules in the editor.
+For information on the autocomplete functionality, refer to Using autocomplete on page 25.
+What is the Quality Monitor language?
+The Quality Monitor language is used to write the check definitions of a Quality Monitor rule. 
+The first instruction of a check definition can be an if instruction or a choose instruction.
+What are the prerequisites for accessing Quality Monitor?
+The optional Productivity Suite module must be activated by a site parameter before you can 
+access Quality Monitor.
+How to access Quality Monitor
+In the Tools submenu of the Main Page navigation menu, expand Productivity Suite and click 
+Quality Monitor.
+How to create and use Quality Monitor rules
+For information on how to create and manage rules, checks and triggers commands, with 
+examples, see the Quality Monitor guide.
+Productivity Suite
+6. Quality Monitor
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+24
+For information on the Agency Manager Inside (AMI)  Quality Monitor, see the Amadeus Selling 
+Platform Connect Tools guide.
+Productivity Suite
+6. Quality Monitor
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+25
+7. Using autocomplete
+What is autocomplete?
+Autocomplete is a feature that automatically completes the statements you are typing in the 
+Advanced Language Editor or Quality Monitor Editor. Inside the editor you can display a list of 
+available proposals and select the appropriate statement instead of manually typing it.
+Where can I find information on autocomplete?
+In the Advanced Language Editor, click How to Write Advanced Smart Flows.
+How to display autocomplete
+ 1. Place the cursor on a line in the editor.
+ 2. Press Ctrl+space bar.
+ 3. To display more specific proposals based on alphabetical filtering, enter the first letter of the 
+statement and press Ctrl+space bar.
+The available autocomplete proposals are displayed.
+How to select a proposed statement in autocomplete
+ 1. To highlight a proposal, press the up-arrow or down-arrow key.
+ 2. To select a proposal, press Enter when the proposal is highlighted.
+Alternatively, use the mouse to highlight and select a proposal.
+How does autocomplete work with insert variables?
+You can display autocomplete for an insert variable and for the property of the insert variable.
+Example Instruction:if (Airsegment.where(Airline == ”AF”).count>=1
+In this example, autocomplete is available for the 'Airsegment' insert variable and the 'Airline' 
+property of that variable.
+Productivity Suite
+7. Using autocomplete
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+26
+How to display autocomplete for insert variables
+ 1. Place the cursor within the brackets of the if condition and press Ctrl+space bar.
+All supported insert variables are displayed.
+ 2. Select a variable.
+ 3. Place the cursor within the brackets after the 'where' clause of the variable and press 
+Ctrl+space bar.
+All properties associated with the insert variable are displayed.
+How to exit autocomplete
+ l Press Esc or the left-arrow or right-arrow key.
+Or:
+ l Click outside the autocomplete suggestion area.
+Or:
+ l Select a proposal.
+Reference: Smart Flow statements supported by autocomplete
+Statement
+Text Inserted When Selected
+if
+if (condition) {
+}
+if else
+if (condition) {
+}
+else {
+}
+else
+else {
+}
+when
+when (“”) {
+}
+choose when
+choose “” {
+when (“”) {
+}
+when (“”) {
+}
+}
+Productivity Suite
+7. Using autocomplete
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+27
+Statement
+Text Inserted When Selected
+choose until when
+choose “” until “” {
+when (“”) {
+}
+when (“”) {
+}
+}
+send
+send “COMMAND”
+ask
+ask “question” assign to variable
+mandatory ask
+mandatory ask “question” assign to variable
+ask email
+ask email “question” assign to variable
+mandatory ask email
+mandatory ask email “question” assign to variable
+ask number
+ask number “question” assign to variable
+mandatory ask number
+mandatory ask number “question” assign to variable
+ask date
+ask date “question” assign to variable
+mandatory ask date
+mandatory ask date “question” assign to variable
+ask date with format DDMM
+ask date “question” with format DDMM assign to variable
+mandatory ask date with format 
+DDMM
+mandatory ask date “question” with format DDMM assign to 
+variable
+ask date with format DDMMYY
+ask date “question” with format DDMMYY assign to variable
+mandatory ask date with format 
+DDMMYY
+mandatory ask date “question” with format DDMMYY assign 
+to variable
+ask date with format DDMON
+ask date “question” with format DDMON assign to variable
+mandatory ask date with format 
+DDMON
+mandatory ask date “question” with format DDMON assign to 
+variable
+ask date with format DDMONYY
+ask date “question” with format DDMONYY assign to variable
+mandatory ask date with format 
+DDMONYY
+mandatory ask date “question” with format DDMONYY assign 
+to variable
+ask date with format DDMONYYYY
+ask date “question” with format DDMONYYYY assign to 
+variable
+mandatory ask date with format 
+DDMONYYYY
+mandatory ask date “question” with format DDMONYYYY 
+assign to variable
+ask date with format MMYY
+ask date “question” with format MMYY assign to variable
+mandatory ask date with format 
+MMYY
+mandatory ask date “question” with format MMYY assign to 
+variable
+ask with format
+ask “question” with format “regular expression” assign to 
+variable
+Productivity Suite
+7. Using autocomplete
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+28
+Statement
+Text Inserted When Selected
+group ask
+group {
+ask “question” assign to variable1
+ask “question” assign to variable2
+}
+group mandatory ask
+group {
+mandatory ask “question” assign to variable1
+mandatory ask “question” assign to variable2
+}
+ask until
+ask “question” until “exit” {
+when (“”) {
+}
+}
+mandatory ask until
+mandatory ask “question” until “exit” {
+when (“”) {
+}
+}
+call
+call “name”
+capture
+capture line:1, column:1, length:1 assign to variable
+select
+select “question” from “option 1, option 2, option 3” assign to 
+variable
+Reference: Quality Monitor statements supported by 
+autocomplete
+Statement
+Text Inserted when Selected
+if
+if (condition) {
+}
+when
+when (“”) {
+}
+choose when
+choose “” {
+when (“”) {
+}
+when (“”) {
+}
+}
+send
+send “COMMAND”
+send auto
+send auto “COMMAND”
+Productivity Suite
+7. Using autocomplete
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+29
+Statement
+Text Inserted when Selected
+call
+call “NAME”
+set status
+set status “WARNING”
+Note:  The statuses (INFO, WARNING, BLOCKING) are also 
+supported by Autocomplete.
+Productivity Suite
+7. Using autocomplete
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+30
+8. Adding missing elements using file 
+finishing
+What is file finishing?
+The File Finishing tool in Productivity Suite allows an office administrator to build business rules 
+that add missing elements to a booking file.
+When File Finishing rules are executed, the relevant mid- and back-office information is added 
+to the booking file without any action from the user.
+When are file finishing rules executed?
+File Finishing rules are executed when a user enters one of the following in the Command Page 
+or its graphical equivalent in the booking file:
+ l ET
+ l ER
+ l ERK
+ l ETK
+The user will then see the results of the File Finishing rules in the Command Page or booking 
+file.
+If the Intelligent rule sending feature for File Finishing is activated, and a booking file is saved 
+multiple times, File Finishing only executes the matching rules once. If Intelligent rule sending is 
+not activated, File Finishing executes all the matching rules every time the booking file is saved.
+Productivity Suite
+8. Adding missing elements using file finishing
+
+
+©2025 Amadeus s.a.s - All Rights Reserved.
+31
+File finishing and automated queueing
+Because File Finishing rules typically run before the booking file is saved to the PNR in the 
+Amadeus reservation system, File Finishing for automated queueing is not supported.
+What are the prerequisites for managing file finishing rules?
+The optional Productivity Suite module must be activated by a site parameter before you can 
+access the tool to manage File Finishing rules.
+How to access file finishing rules management
+In the Tools submenu of the Main Page navigation menu, expand Productivity Suite and click 
+File Finishing.
+How to create and use file finishing rules
+See the File Finishing guide for more information.
+Productivity Suite
+8. Adding missing elements using file finishing
+
+

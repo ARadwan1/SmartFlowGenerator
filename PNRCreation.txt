@@ -1,0 +1,854 @@
+send "RTI"
+capture line : 2, column : 32, length : 2 assign to Seats
+capture line : 2, column : 3, length : 2 assign to element
+
+
+if (Seats < 10) {
+  capture line : 2, column : 32, length : 1 assign to Seats
+}
+
+
+if (Seats != "") {
+  
+      if (element > Seats) {
+        choose "<h1 style = color:#000000>Created by :<b style = color:#A49365> Performance Development Unit
+                      pdu-tech@saudia.com</b>
+<b style = color:#000000>version no. :<b style = color:#A49365>20112201</b></b>
+            -------------------------------------</h1>
+            
+            <b>Please select next step فضلا اختيار الإجراء التالي</b>" {
+          when ("Add contact إضافة عناوين الاتصال") {
+              //if (PaxType != "INF") {
+                mandatory ask number "Insert mobile Number including international code
+                أدخل رقم الجوال بالرمز الدولي" 
+                  assign to PhoneNo
+                select "Select notifications language اختر لغة الإشعارات"
+                  from "Ar,En" assign to Language
+                ask email "Inser email address أدخل البريد الإلكتروني" 
+                  assign to emailaddress
+                
+                if (Seats > 1) {
+                    send "APN-SV/M+" + PhoneNo + "/" + Language + "/P1-" + Seats
+                    send "APM-" + PhoneNo //+ "/P" + Pax
+                    if (emailaddress != "") {
+                      send "APN-SV/E+" + emailaddress + "/P1-" + Seats
+                      send "APE-" + emailaddress //+ "/P" + Pax                        
+                    }
+                    else {
+                        choose "Do you like to add a remark that passengers have no email?
+                      هل يتم إضافة ملاحظة بعدم توفر بريد لدى الضيوف؟" {
+                                    when ("Yes") {
+                                                send "RM all PAX have no email" + "/P1-" + Seats
+                                    }
+                                    when ("No") {
+                                                
+                                    }
+                        }
+                    }
+                }
+                else {
+                    send "APN-SV/M+" + PhoneNo + "/" + Language + "/P1"
+                    send "APM-" + PhoneNo //+ "/P" + Pax
+                    if (emailaddress != "") {
+                      send "APN-SV/E+" + emailaddress + "/P1"
+                      send "APE-" + emailaddress //+ "/P" + Pax                        
+                    }
+                    else {
+                        choose "Do you like to add a remark that passenger has no email?
+                      هل يتم إضافة ملاحظة بعدم توفر بريد لدى الضيف؟" {
+                                    when ("Yes") {
+                                                send "RM PAX has no email" + "/P1" 
+                                    }
+                                    when ("No") {
+                                                
+                                    }
+                        }
+                    }                    
+                }
+
+                choose "Does the booking include other airline?
+                هل يتضمن الحجز مسار على شركة طيران أخرى؟" {
+                        when ("Yes") {
+                                        //send "SRCTCM-" + PhoneNo + "/P" + Pax
+                      if (Seats > 1) {
+                          send "SRCTCM-" + PhoneNo + "/P1-" + Seats
+                          if (emailaddress != "") {
+                              choose "<b style = color:#D40B0B>*** Be sure to update command with below instructions if applicable***
+    *** فضلا تعديل الأمر إن ألزم وفقا للتالي حسب الأنظمة والإجراءات *** </b>
+                                <h1 style = color:#000000>Change \"@\" to \"//\"
+    Change \"_\" to \"..\"
+    Change \"-\" to \"./\"</b></h1>" {
+                                  when ("OK") {
+                                    send "SRCTCE-" + emailaddress + "/P1-" + Seats
+                                    append "SRCTCE-" + emailaddress + "/P1-" + Seats to commandline
+                                  }
+                              }                              
+                          }                          
+
+                      }
+                      else {
+                          send "SRCTCM-" + PhoneNo + "/P1"
+                          if (emailaddress != "") {
+                              choose "<b style = color:#D40B0B>*** Be sure to update command with below instructions if applicable***
+    *** فضلا تعديل الأمر إن ألزم وفقا للتالي حسب الأنظمة والإجراءات *** </b>
+                                <h1 style = color:#000000>Change \"@\" to \"//\"
+    Change \"_\" to \"..\"
+    Change \"-\" to \"./\"</b></h1>" {
+                                  when ("OK") {
+                                    send "SRCTCE-" + emailaddress + "/P1"
+                                    append "SRCTCE-" + emailaddress + "/P1" to commandline
+                                         }
+                              }                              
+                          }
+                          
+                      }
+                        } // end of when Yes
+                        when ("No") {
+                                    
+                        }
+                }
+
+                //send "SRCTCE-" + 
+              //} 
+            } // end of when
+          when ("Add infant إضافة رضيع") {
+             //call "Copy of Copy of Names, DOCS and Contact"
+              choose 
+                "<h1 style = color:#000000>Created by :<b style = color:#A49365> Performance Development Unit
+                      pdu-tech@saudia.com</b></b>
+<b style = color:#000000>version no. :<b style = color:#A49365>20112201</b></b>
+            -------------------------------------</h1>
+            
+            <b style = color:#D40B0B>    *** SAUDIA procedure should be apply ***
+            *** يجب تطبيق جميع أنظمة وإجراءات السعودية ***</b>
+            
+<b>Select if trip international or domestic. هل الرحلة دولية أم داخلية؟</b>" {
+  
+                      when ("International") {
+                                    append "INT" to SI
+                        select "Select Document Type اختيار نوع الوثيقة" 
+                          from "Passport (P) جواز سفر,Naional Identity for Saudi (I) هوية وطنية للسعوديين,Other أخرى" 
+                          assign to DocMainType
+                        }
+                        when ("Domestic") {
+                                    append "DOM" to SI
+                        select "Select Document Type اختيار نوع الوثيقة" 
+                          from "Naional Identity for Saudi (I) هوية وطنية للسعوديين,Identity card (A) هوية مقيم,Passport (P) جواز سفر,Other أخرى" 
+                          assign to DocMainType            
+                        }
+            
+              } // end of choose
+              
+                    if (DocMainType == "Naional Identity for Saudi (I) هوية وطنية للسعوديين") {
+                      append "I" to DocType
+                      append "NI" to FOIDType
+                      append "SAU" to DocIssCou
+                      append "SAU" to NAT
+                      append "Infant (INF) رضيع" to PaxTypeList
+                      
+                      group {
+                          mandatory ask number "<h1 style = color:#D40B0B>National ID information معلومات الهوية الوطنية</h1>
+                            National ID number رقم الهوية الوطنية"
+                              assign to DocNo
+                          ask date "National ID <b>expiry</b> <b>تاريخ انتهاء</b> الهوية الوطنية" 
+                            with format DDMONYY assign to DocExp
+                          select "Gender الجنس"
+                            from "Male (M) ذكر,Female (F) أنثى"
+                            assign to GenderList
+                        }
+                    } // end if I for infant
+                    
+                    if (DocMainType == "Identity card (A) هوية مقيم") {
+                      append "A" to DocType
+                      append "ID" to FOIDType
+                      append "SAU" to DocIssCou
+                      append "Infant (INF) رضيع" to PaxTypeList
+                      group {
+                          mandatory ask number "<h1 style = color:#D40B0B>]IQAMA Document information معلومات الإقامة</h1>
+                            IQAMA document number رقم الإقامة"
+                              assign to DocNo
+                          ask date "IQAMA document <b>expiry</b> <b>تاريخ انتهاء</b> اﻹقامة"
+                            with format DDMONYY assign to DocExp
+                          select "Gender الجنس" 
+                            from "Male (M) ذكر,Female (F) أنثى" 
+                            assign to GenderList
+                          mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                            assign to NAT  
+                       }
+                    } // end if A for infant
+                    
+                    
+                    if (DocMainType == "Passport (P) جواز سفر") {
+                      append "P" to DocType
+                      append "PP" to FOIDType
+                      append "Infant (INF) رضيع" to PaxTypeList
+                      group {
+                          mandatory ask "<h1 style = color:#D40B0B>Passport information معلومات جواز السفر</h1>
+                            Passport number رقم جواز السفر" 
+                              assign to DocNo
+                          //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                          mandatory ask "Passport issuance country 3-letter code" 
+                            with format "^[a-zA-Z]{2,3}$"
+                            assign to DocIssCou
+                          mandatory ask date "Passport <b>expiry</b> <b>تاريخ انتهاء</b> جواز السفر"
+                            with format DDMONYY assign to DocExp
+                          select "Gender الجنس" 
+                            from "Male (M) ذكر,Female (F) أنثى" 
+                            assign to GenderList
+                          mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                            assign to NAT
+                        }
+                    } // end if passport for infant
+                    
+                    if (DocMainType == "Other أخرى") {
+                      append "Infant (INF) رضيع" to PaxTypeList
+                      if (SI == "DOM") {
+                        append "O" to DocType
+                      }
+                      else {
+                        mandatory ask "Document Type" assign to DocType
+                      }
+                      group {
+                          mandatory ask "<h1 style = color:#D40B0B>Document information معلومات المستند</h1>
+                            Document number رقم المستند" 
+                              assign to DocNo
+                          //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                          mandatory ask "Document issuance country 3-letter code" 
+                            with format "^[a-zA-Z]{2,3}$"
+                            assign to DocIssCou
+                          mandatory ask date "Document <b>expiry</b> <b>تاريخ انتهاء</b> المستند"
+                            with format DDMONYY assign to DocExp
+                          select "Gender الجنس" 
+                            from "Male (M) ذكر,Female (F) أنثى" 
+                            assign to GenderList
+                          mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                            assign to NAT
+                        }
+                       } // end if other DocMainType              
+                      
+                        append "INF" to PaxType
+                        append "MSTR" to TitleCat // MSTR just to categorize
+                                
+                      if (TitleCat == "MSTR") {
+                        if (GenderList == "Male (M) ذكر") {
+                            append "MI" to Gender
+                          group {
+                            mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                              Family Name (surname) اسم العائلة" 
+                                assign to FamilyName
+                            mandatory ask "First (given) Name الاسم الأول" 
+                              assign to FirstName
+                            ask "Middle name الاسم الأوسط" 
+                              assign to MidName
+                            select "Title:" from "MSTR,PRINCE" assign to Title
+                            mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                              with format DDMONYY assign to DoB
+                            }
+                          }
+                        else {
+                          append "FI" to Gender
+                          group {
+                            mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                              Family Name (surname) اسم العائلة" 
+                                assign to FamilyName
+                            mandatory ask "First (given) Name الاسم الأول" 
+                              assign to FirstName
+                            ask "Middle name الاسم الأوسط" 
+                              assign to MidName
+                            select "Title:" from "MISS,PRINCESS" assign to Title
+                            mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                              with format DDMONYY assign to DoB
+                            }
+                          }
+                      }
+                                    
+                      send "RTN"
+                      mandatory ask number "Insert adult passenger number to add infant
+                      حدد مسافر بالغ لإضافة الرضيع
+                      
+            <b style = color:#D40B0B>*** Add infant to ADT PAX type only
+            otherwise add infant manually ***
+            *** يضاف الرضيع فقط إلى البالغ بالصفة 
+            ADT
+خلاف لذلك يضاف الرضيع يدويا ***"
+                      
+                        assign to Pax
+                    
+                      
+                    
+                      send Pax + "/(INF" + FamilyName + "/" + FirstName + " " +  Title + "/" + DoB + ")" 
+                  
+              
+                  
+                    //below added 28OCT20 by 11007400 to match procedure
+                          choose "Is this passenger the main document holder ?
+                                  هل المسافر الحامل الأساسي للوثيقة ؟" {
+                            when ("Yes") {
+                                       append "-H" to Holder
+                                     }
+                                     when ("No") {
+                                                   append "" to Holder
+                                     }
+                          }
+                  
+                    send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax
+
+                  
+                    send "RTI"
+                    capture line : 2, column : 3, length : 2 assign to element
+                    call "Names, DOCS and Contact"
+                    
+                  send "RT"             
+             
+              
+             
+             
+            }  // END OF WHEN TO ADD INF ONLY
+          
+          
+          
+          
+          when ("Add DOCS only إضافة معلومات وثيقة السفر فقط") {
+              send "RTN,G"
+
+              mandatory ask number "Insert passenger number to add DOCS ... /P?
+              فضلا تحديد رقم المسافر ../P?"
+                assign to Pax
+              
+              
+              if (Pax >= element) {
+                  mandatory ask number "Incorrect number, please insert passenger number to add DOCS ... /P?
+                  الرقم المدخل غير صحيح ، فضلا تحديد رقم المسافر ../P?"
+                    assign to Pax                  
+              }
+
+              choose "Select Passenger Gender" {
+                when ("Male (M)") {
+                                    append "M" to Gender
+                        }
+                        when ("Female (F)") {
+                                    append "F" to Gender
+                        }
+                when ("Male Infant (MI)") {
+                        append "MI" to Gender
+                }
+                when ("Female Infant (FI)") {
+                        append "FI" to Gender
+                }
+              }
+              
+                  choose "
+            <b style = color:#D40B0B>    *** SAUDIA procedure should be apply ***
+            *** يجب تطبيق جميع أنظمة وإجراءات السعودية ***</b>
+            
+<b>Select if trip international or domestic. هل الرحلة دولية أم داخلية؟</b>" {
+
+            when ("International") {
+                        append "INT" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Passport (P) جواز سفر,Naional Identity for Saudi (I) هوية وطنية للسعوديين,Other أخرى" 
+                assign to DocMainType
+            }
+            when ("Domestic") {
+                        append "DOM" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Naional Identity for Saudi (I) هوية وطنية للسعوديين,Identity card (A) هوية مقيم,Passport (P) جواز سفر,Other أخرى" 
+                assign to DocMainType            
+            }
+          } // end of choose
+
+
+          if (DocMainType == "Naional Identity for Saudi (I) هوية وطنية للسعوديين") {
+            append "I" to DocType
+            append "NI" to FOIDType
+            append "SAU" to DocIssCou
+            append "SAU" to NAT
+            
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>National ID information معلومات الهوية الوطنية</h1>
+                  National ID number رقم الهوية الوطنية"
+                    assign to DocNo
+                ask date "National ID <b>expiry</b> <b>تاريخ انتهاء</b> الهوية الوطنية" 
+                  with format DDMONYY assign to DocExp
+              }
+          } // end if I
+
+          if (DocMainType == "Identity card (A) هوية مقيم") {
+            append "A" to DocType
+            append "ID" to FOIDType
+            append "SAU" to DocIssCou
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>]IQAMA Document information معلومات الإقامة</h1>
+                  IQAMA document number رقم الإقامة"
+                    assign to DocNo
+                ask date "IQAMA document <b>expiry</b> <b>تاريخ انتهاء</b> اﻹقامة"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT  
+             }
+          } // end if A
+
+
+          if (DocMainType == "Passport (P) جواز سفر") {
+            append "P" to DocType
+            append "PP" to FOIDType
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Passport information معلومات جواز السفر</h1>
+                  Passport number رقم جواز السفر" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Passport issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Passport <b>expiry</b> <b>تاريخ انتهاء</b> جواز السفر"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if passport
+
+
+          if (DocMainType == "Other أخرى") {
+            if (SI == "DOM") {
+                        append "O" to DocType
+            }
+            else {
+              mandatory ask "Document Type" assign to DocType
+            }
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Document information معلومات المستند</h1>
+                  Document number رقم المستند" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Document issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Document <b>expiry</b> <b>تاريخ انتهاء</b> المستند"
+                  with format DDMONYY assign to DocExp
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if other DocMainType
+                        
+
+
+              group {
+                mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Family Name (surname) اسم العائلة" 
+                    assign to FamilyName
+                mandatory ask "First (given) Name الاسم الأول" 
+                  assign to FirstName
+                ask "Middle name الاسم الأوسط" 
+                  assign to MidName
+                mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                  with format DDMONYY assign to DoB
+              }
+        
+          
+          
+          
+            //below added 28OCT20 by 11007400 to match procedure
+                  choose "Is this passenger the main document holder ?
+                          هل المسافر الحامل الأساسي للوثيقة ؟" {
+                    when ("Yes") {
+                          append "-H" to Holder
+                        }
+                        when ("No") {
+                                      append "" to Holder
+                        }
+                  }
+          
+          if (Gender == "M") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+            //if (DocMainType != "") {
+                        send "SR FOID SV HK1-" + FOIDType + DocNo + "/P" + Pax              
+            //}
+          }
+          
+          if (Gender == "F") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+            send "SR FOID SV HK1-" + FOIDType + DocNo + "/P" + Pax              
+          }
+
+          if (Gender == "MI") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+          }
+
+          if (Gender == "FI") {
+            send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax  
+          }
+          
+
+          
+            //send "RTI"
+            //capture line : 2, column : 3, length : 2 assign to element
+            //call "Names, DOCS and Contact"
+            
+          //send "RT"              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+          }
+        } // end of choose  
+    }
+    else {
+          choose "<h1 style = color:#000000>Created by :<b style = color:#A49365> Performance Development Unit
+                      pdu-tech@saudia.com</b></b>
+<b style = color:#000000>version no. :<b style = color:#A49365>20112201</b></b>
+            -------------------------------------</h1>
+            
+            <b style = color:#D40B0B>    *** SAUDIA procedure should be apply ***
+            *** يجب تطبيق جميع أنظمة وإجراءات السعودية ***</b>
+            
+<b>Select if trip international or domestic. هل الرحلة دولية أم داخلية؟</b>"  {
+            when ("International") {
+                        append "INT" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Passport (P) جواز سفر,Naional Identity for Saudi (I) هوية وطنية للسعوديين,Other أخرى" 
+                assign to DocMainType
+            }
+            when ("Domestic") {
+                        append "DOM" to SI
+              select "Select Document Type اختيار نوع الوثيقة" 
+                from "Naional Identity for Saudi (I) هوية وطنية للسعوديين,Identity card (A) هوية مقيم,Passport (P) جواز سفر,Other أخرى" 
+                assign to DocMainType            
+            }
+          }
+          
+          if (DocMainType == "Naional Identity for Saudi (I) هوية وطنية للسعوديين") {
+                  append "I" to DocType
+            append "NI" to FOIDType
+            append "SAU" to DocIssCou
+            append "SAU" to NAT
+            
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>National ID information معلومات الهوية الوطنية</h1>
+                  National ID number رقم الهوية الوطنية"
+                    assign to DocNo
+                ask date "National ID <b>expiry</b> <b>تاريخ انتهاء</b> الهوية الوطنية" 
+                  with format DDMONYY assign to DocExp
+                select "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Passenger Type فئة المسافر" 
+                    from "Adult (ADT) بالغ,Child (CHD) طفل,Infant (INF) رضيع,Other أخرى"
+                    assign to PaxTypeList
+                select "Gender الجنس"
+                  from "Male (M) ذكر,Female (F) أنثى"
+                  assign to GenderList
+              }
+          } // end if I
+
+          if (DocMainType == "Identity card (A) هوية مقيم") {
+            append "A" to DocType
+            append "ID" to FOIDType
+            append "SAU" to DocIssCou
+            group {
+                mandatory ask number "<h1 style = color:#D40B0B>]IQAMA Document information معلومات الإقامة</h1>
+                  IQAMA document number رقم الإقامة"
+                    assign to DocNo
+                ask date "IQAMA document <b>expiry</b> <b>تاريخ انتهاء</b> اﻹقامة"
+                  with format DDMONYY assign to DocExp
+                select "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Passenger Type فئة المسافر" 
+                    from "Adult (ADT) بالغ,Child (CHD) طفل,Infant (INF) رضيع,Other أخرى" 
+                    assign to PaxTypeList
+                select "Gender الجنس" 
+                  from "Male (M) ذكر,Female (F) أنثى" 
+                  assign to GenderList
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT  
+             }
+          } // end if A
+
+
+          if (DocMainType == "Passport (P) جواز سفر") {
+            append "P" to DocType
+            append "PP" to FOIDType
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Passport information معلومات جواز السفر</h1>
+                  Passport number رقم جواز السفر" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Passport issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Passport <b>expiry</b> <b>تاريخ انتهاء</b> جواز السفر"
+                  with format DDMONYY assign to DocExp
+                select "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Passenger Type فئة المسافر" 
+                    from "Adult (ADT) بالغ,Child (CHD) طفل,Infant (INF) رضيع,Other أخرى" 
+                    assign to PaxTypeList
+                select "Gender الجنس" 
+                  from "Male (M) ذكر,Female (F) أنثى" 
+                  assign to GenderList
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if passport
+
+
+          if (DocMainType == "Other أخرى") {
+            if (SI == "DOM") {
+                        append "O" to DocType
+            }
+            else {
+              mandatory ask "Document Type" assign to DocType
+            }
+            group {
+                mandatory ask "<h1 style = color:#D40B0B>Document information معلومات المستند</h1>
+                  Document number رقم المستند" 
+                    assign to DocNo
+                //mandatory ask "Document issuance country 3-letter code رمز دولة إصدار المستند" 
+                mandatory ask "Document issuance country 3-letter code" 
+                  with format "^[a-zA-Z]{2,3}$"
+                  assign to DocIssCou
+                mandatory ask date "Document <b>expiry</b> <b>تاريخ انتهاء</b> المستند"
+                  with format DDMONYY assign to DocExp
+                select "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                  Passenger Type فئة المسافر" 
+                    from "Adult (ADT) بالغ,Child (CHD) طفل,Infant (INF) رضيع,Other أخرى" 
+                    assign to PaxTypeList
+                select "Gender الجنس" 
+                  from "Male (M) ذكر,Female (F) أنثى" 
+                  assign to GenderList
+                mandatory ask "Nationality 3-letter code رمز الجنسية" 
+                  assign to NAT
+              }
+          } // end if other DocMainType
+            
+            if (PaxTypeList == "Adult (ADT) بالغ") {
+              append "ADT" to PaxType
+              append "MR" to TitleCat // MR just to categorize
+            }
+            if (PaxTypeList == "Child (CHD) طفل") {
+              append "CHD" to PaxType
+              append "MSTR" to TitleCat // MSTR just to categorize
+            }
+            if (PaxTypeList == "Infant (INF) رضيع") {
+              append "INF" to PaxType
+              append "MSTR" to TitleCat // MSTR just to categorize
+            }
+            if (PaxTypeList == "Other أخرى") {
+              mandatory ask "Insert passenger type أدخل فئة المسافر" 
+                assign to PaxType
+              append "ASK" to TitleCat // ASK just to categorize
+            }
+
+      
+      
+            if (TitleCat == "MR") {
+              if (GenderList == "Male (M) ذكر") {
+                  append "M" to Gender
+                  group {
+                    mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                      Family Name (surname) اسم العائلة" 
+                        assign to FamilyName
+                    mandatory ask "First (given) Name الاسم الأول" 
+                      assign to FirstName
+                    ask "Middle name الاسم الأوسط" 
+                      assign to MidName
+                    select "Title:" from "MR,PRINCE,DR,CAPT,Other" assign to Title
+                    mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                      with format DDMONYY assign to DoB
+                  }
+                  if (Title == "Other") {
+                      mandatory ask "Insert passenger title" 
+                        assign to Title
+                  }
+                }
+              else {
+                append "F" to Gender
+                group {
+                  mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                    Family Name (surname) اسم العائلة" 
+                      assign to FamilyName
+                  mandatory ask "First (given) Name الاسم الأول" 
+                    assign to FirstName
+                  ask "Middle name الاسم الأوسط" 
+                    assign to MidName
+                  select "Title:" from "MRS,MS,PRINCESS,DR,Other" assign to Title
+                  mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                    with format DDMONYY assign to DoB
+                  }            
+                }
+            }
+            
+            if (TitleCat == "MSTR") {
+              if (GenderList == "Male (M) ذكر") {
+                  append "M" to Gender
+                group {
+                  mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                    Family Name (surname) اسم العائلة" 
+                      assign to FamilyName
+                  mandatory ask "First (given) Name الاسم الأول" 
+                    assign to FirstName
+                  ask "Middle name الاسم الأوسط" 
+                    assign to MidName
+                  select "Title:" from "MSTR,PRINCE" assign to Title
+                  mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                    with format DDMONYY assign to DoB
+                  }
+                }
+              else {
+                append "F" to Gender
+                group {
+                  mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                    Family Name (surname) اسم العائلة" 
+                      assign to FamilyName
+                  mandatory ask "First (given) Name الاسم الأول" 
+                    assign to FirstName
+                  ask "Middle name الاسم الأوسط" 
+                    assign to MidName
+                  select "Title:" from "MISS,PRINCESS" assign to Title
+                  mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                    with format DDMONYY assign to DoB
+                  }
+                }
+            }
+        
+            if (TitleCat == "ASK") {
+              if (GenderList == "Male (M) ذكر") {
+                  append "M" to Gender
+                group {
+                  mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                    Family Name (surname) اسم العائلة" 
+                      assign to FamilyName
+                  mandatory ask "First (given) Name الاسم الأول" 
+                    assign to FirstName
+                  ask "Middle name الاسم الأوسط" 
+                    assign to MidName
+                  select "Title:" from "MR,PRINCE,MSTR" assign to Title
+                  mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                    with format DDMONYY assign to DoB
+                }
+        
+                }
+              else {
+                append "F" to Gender
+                group {
+                  mandatory ask "<h1 style = color:#D40B0B>Passenger information معلومات المسافر</h1>
+                    Family Name (surname) اسم العائلة" 
+                      assign to FamilyName
+                  mandatory ask "First (given) Name الاسم الأول" 
+                    assign to FirstName
+                  ask "Middle name الاسم الأوسط" 
+                    assign to MidName
+                  select "Title:" from "MRS,MS,PRINCESS,MISS" assign to Title
+                  mandatory ask date "Insert date of birth أدخل تاريخ الميلاد" 
+                    with format DDMONYY assign to DoB
+                  }
+                }        
+                
+            }
+        
+        
+        
+        if (PaxType == "ADT") {
+           send "NM1" + FamilyName + "/" + FirstName + " " + MidName + " " + Title  
+        }
+        
+        if (PaxType == "CHD") {
+            send "NM1" + FamilyName + "/" + FirstName + " " + MidName + " " + Title + "(CHD/" + DoB + ")" 
+        }
+        
+        if (PaxType == "INF") {
+            send "RTN"
+            mandatory ask number "Insert passenger number to add infant"
+              assign to Pax
+          
+            send Pax + "/(INF" + FamilyName + "/" + FirstName + " " +  Title + "/" + DoB + ")" 
+        }
+        
+        
+        if (TitleCat == "ASK") {
+            if (PaxType == "INS") {
+                send "NM1" + FamilyName + "/" + FirstName + " " + MidName + " " + Title + "(INS/" + DoB + ")" 
+            }
+            else {
+                send "NM1" + FamilyName + "/" + FirstName + " " + MidName + " " + Title + "(" + PaxType + ")"                
+            }
+        }
+        
+        if (PaxType != "INF") {
+            send "RTN"
+            mandatory ask number "Insert passenger number to add DOCS ... /P?
+            حدد رقم المسافر ../P?"
+              assign to Pax
+        }
+        
+          //below added 28OCT20 by 11007400 to match procedure
+                choose "Is this passenger the main document holder ?
+                        هل المسافر الحامل الأساسي للوثيقة ؟" {
+                  when ("Yes") {
+                          append "-H" to Holder
+                        }
+                        when ("No") {
+                                      append "" to Holder
+                        }
+                }
+        
+        if (PaxType == "INF") {
+          send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "I-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax
+        }
+        else {
+          send "SR DOCS YY HK1-" + DocType + "-" + DocIssCou + "-" + DocNo + "-" + NAT + "-" + DoB + "-" + Gender + "-" + DocExp + "-" + FamilyName + "-" + FirstName + "-" + MidName + Holder + "/P" + Pax      
+          if (DocMainType != "Other أخرى") {
+            send "SR FOID SV HK1-" + FOIDType + DocNo + "/P" + Pax                    
+          }
+        }
+        
+          send "RTI"
+          capture line : 2, column : 3, length : 2 assign to element
+          call "Names, DOCS and Contact"
+          
+        //send "RT"
+
+
+    }
+
+
+}
+else {
+  choose "<h1 style = color:#000000>Created by :<b style = color:#A49365> Performance Development Unit
+                      pdu-tech@saudia.com</b></b>
+<b style = color:#000000>version no. :<b style = color:#A49365>20112201</b></b>
+            -------------------------------------</h1>
+            
+  <b style = color:#D40B0B>*** BE SURE TO BOOK SEGMENT FIRST ***
+  *** الرجاء التأكد من سحب الإمكانية أولا *** " {
+            when ("OK") {
+                        
+            }
+  }
+  
+} //End of else of if (Seats != "") 
+
+
+
+
+
+
+
+

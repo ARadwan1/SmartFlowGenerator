@@ -1,0 +1,47 @@
+# Amadeus Terminal Response Layouts Needed
+
+Please paste an example of the full terminal response for each of the following commands directly below the corresponding heading.
+
+Make sure to preserve the EXACT spacing, line breaks, and formatting from the terminal, as the Smart Flow `capture` command relies on exact line/column/length coordinates. Use code blocks if necessary.
+
+
+### 1. PNR Display (RT)
+(Used to capture Seats, Elements, Names, Segment Status, etc.)
+
+[Paste RT response here]
+
+
+### 2. Ticket Image Display (TWD)
+(Used to capture Passenger Name, Issue Date, POI, DOI, IOI, Form of Payment (FO), Original Issue details, etc.)
+
+[Paste TWD response here]
+
+
+### 3. EMD Image Display (EWD)
+(Used to capture Passenger Name, EMD Issue details, FO lines, Original Issue, etc.)
+
+[Paste EWD response here]
+
+
+### 4. Fare / Price Display (FXP / FXB)
+(Used to capture Fare Families, Total Price, Taxes, Penalties, etc.)
+
+[Paste FXP/FXB response here]
+
+
+### 5. Ticket Record (TTE/ALL)
+(Used to capture existing ticket numbers associated with passengers, E3 markers, Itinerary types, etc.)
+
+[Paste TTE/ALL response here]
+
+
+### 6. Display Fares (DF)
+(Used to view the calculation, VAT, and remaining value or total amounts)
+
+[Paste DF response here]
+
+
+### 7. Any Other Responses
+(If there are other screens commonly captured in your Smart Flows, such as TQT, RTI, RTN, etc., please add them below)
+
+[Paste other responses here if applicable]
