@@ -20,11 +20,9 @@ if not api_key:
 # Initialize the client
 client = genai.Client(api_key=api_key)
 
-# Read the skills file
-@st.cache_data
+# Read the skills file. We load it dynamically every time so new user rules take immediate effect.
 def load_skills():
     try:
-        # Assumes the app is run from the exact directory where the skills file lives
         with open("SmartFlow_Skills.md", "r", encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
@@ -55,35 +53,88 @@ config = types.GenerateContentConfig(
     temperature=0.2, # Low temperature for code generation
 )
 
-# User input
-user_prompt = st.text_area("Describe your Smart Flow:", height=150, placeholder="e.g. Prompt the user for a passenger name, send 'RT', capture the 6-character PNR locator, and put it in a 'RM' command...")
+# UI Layout Tabs
+tab1, tab2 = st.tabs(["🚀 Generator & Prompt Wizard", "🧠 Teach the AI (Add Rules)"])
 
-if st.button("Generate Smart Flow", type="primary"):
-    if not user_prompt.strip():
-        st.error("Please enter a description.")
-    else:
-        with st.spinner("Generating your script..."):
-            try:
-                response = client.models.generate_content(
-                    model='gemini-2.5-pro',
-                    contents=user_prompt,
-                    config=config,
-                )
-                
-                script = response.text
-                
-                # Cleanup markdown blocks if the model accidentally adds them
-                if script.startswith("```smartflow"):
-                    script = script.replace("```smartflow", "").strip()
-                elif script.startswith("```"):
-                    script = script[3:].strip()
-                if script.endswith("```"):
-                    script = script[:-3].strip()
+with tab1:
+    st.markdown("### 1. Build Your Prompt")
+    
+    col1, col2 = st.columns([1, 1])
+    
+    # Initialize session state for prompt if not exists
+    if "prompt" not in st.session_state:
+        st.session_state.prompt = ""
+        
+    def set_prompt(text):
+        st.session_state.prompt = text
+    
+    with col1:
+        st.subheader("Quick Templates")
+        if st.button("TWD / Ticket Pricing Flow"):
+            set_prompt("Create a Smart Flow to ask the user for a ticket number (enforcing a hyphen). Then format a TWD/TKT command with the number. Finally, use Fallback Capturing to search for the word TOTAL dynamically and display the amount.")
+        
+        if st.button("Add Passenger Info"):
+            set_prompt("Create a Smart Flow to ask for Family Name and First Name, then format and send an NM1 command.")
 
-                st.subheader("Generated Script")
-                st.code(script, language="javascript") # Streamlit supports JS syntax highlighting which is close enough to Smart Flow
+        if st.button("EMD Base Fare Capture"):
+            set_prompt("Create a Smart Flow to ask for an EMD number, send an EWD command, and use Fallback Capturing to find the base FARE value dynamically.")
+            
+    with col2:
+        st.subheader("Prompt Wizard")
+        with st.expander("Build Prompt Step-by-Step"):
+            wi_goal = st.text_input("Main goal? (e.g., Read ticket and sum amounts)")
+            wi_inputs = st.text_input("Questions for agent? (e.g., Ticket Number)")
+            wi_commands = st.text_input("Cryptic commands? (e.g., TWD/TKT)")
+            wi_captures = st.text_input("Data to capture? (e.g., Total Fare via Fallback)")
+            
+            if st.button("Compile into Prompt"):
+                compiled_text = f"Goal: {wi_goal}\nAgent Prompts: {wi_inputs}\nCommands: {wi_commands}\nCaptures Required: {wi_captures}\nPlease generate the smart flow."
+                set_prompt(compiled_text)
                 
-                st.success("Successfully generated! Use the copy button in the top right of the code block above.")
-                
-            except Exception as e:
-                st.error(f"Error generating content: {str(e)}")
+    st.divider()
+    
+    user_prompt = st.text_area("2. Your Final Prompt (Edit if needed):", value=st.session_state.prompt, height=150)
+
+    if st.button("Generate Smart Flow", type="primary", use_container_width=True):
+        if not user_prompt.strip():
+            st.error("Please build or enter a description in the text area above.")
+        else:
+            with st.spinner("Generating your script..."):
+                try:
+                    response = client.models.generate_content(
+                        model='gemini-2.5-pro',
+                        contents=user_prompt,
+                        config=config,
+                    )
+                    
+                    script = response.text
+                    
+                    # Cleanup markdown blocks if the model accidentally adds them
+                    if script.startswith("```smartflow"):
+                        script = script.replace("```smartflow", "").strip()
+                    elif script.startswith("```"):
+                        script = script[3:].strip()
+                    if script.endswith("```"):
+                        script = script[:-3].strip()
+
+                    st.subheader("Generated Script")
+                    st.code(script, language="javascript")
+                    
+                    st.success("Successfully generated! Use the copy button in the top right of the code block above.")
+                except Exception as e:
+                    st.error(f"Error generating content: {str(e)}")
+
+with tab2:
+    st.header("Teach the AI new rules")
+    st.markdown("Did the AI make a mistake or miss a specific Amadeus command syntax? Add a golden rule here. It will be **permanently** added to its knowledge base, making it smarter for everyone.")
+    
+    new_rule = st.text_area("Describe the correct behavior/logic:", placeholder="Example: When issuing an EMD, never use TWD, always use EWD and capture the base fare.", height=150)
+    
+    if st.button("Add to AI Knowledge Base", type="primary"):
+        if new_rule.strip():
+            with open("SmartFlow_Skills.md", "a", encoding="utf-8") as file:
+                file.write("\n\n### User Added Rule / Correction:\n")
+                file.write(new_rule.strip() + "\n")
+            st.success("Rule added successfully! The AI will now use this knowledge in all future generations. No restart needed.")
+        else:
+            st.error("Please write a rule first.")

@@ -207,11 +207,13 @@ PNR Headers often contain the Record Locator and Creating Office.
 
 ### B. Ticket Image (TWD)
 The `TWD` screen shows exact ticketing details.
+**CRITICAL RULES FOR TWD:**
+1. **Command Syntax:** To open a ticket image, you MUST use `TWD/TKT` (NOT `TWD/T`). Example: `send "TWD/TKT" + TicketNumber`.
+2. **Ticket Hyphen:** The input ticket number MUST contain a hyphen after the airline code to prevent failure (e.g., `065-1234567890`). Ensure prompts or regex enforce the hyphen.
+3. **Dynamic Totals:** DO NOT use static line tracking (like line 9) for `TOTAL `. You MUST use Fallback Capturing (nested `if/else` from line 5 to 20+) to search for the word `TOTAL ` and then capture the amount that follows the currency code (e.g. `SAR`).
+
 - **Ticket Number:** Line 1, Column 5, Length 13. (e.g., `0652194446737` from `TKT-0652194446737`)
 - **Issue Date (DOI):** Line 2, Column 38, Length 7. (e.g., `23FEB26` from `DOI-23FEB26`)
-- **Fare (Base):** Line 7 (or immediately after itinerary), Column 14, Length varies. (e.g., `313.00` from `FARE   F SAR       313.00`)
-- **Total Tax:** Line 8, Column 14, Length varies.
-- **Total Price:** Line 9, Column 14, Length 9. (e.g., `446.20` from `TOTAL    SAR       446.20`)
 - **Original Issue (FO):** If reissued, the original ticket details appear as an `FO` line near the bottom.
 
 ### C. EMD Image (EWD)
