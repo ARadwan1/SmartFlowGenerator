@@ -12,6 +12,8 @@ This document serves as the foundation for building an application/AI agent that
 ## 1. Syntax Basics & Variables
 Smart Flow scripts run sequentially. The language uses basic scripting logic. 
 
+**CRITICAL:** Smart Flow does NOT support internal mathematical operations. The `+` operator is used ONLY for string concatenation (e.g., `"5" + "2"` evaluates to `"52"`). To calculate values, you must send an Amadeus calculator command (like `DF`) and then `capture` the result from the screen.
+
 **Variables:**
 - Variables act as containers to store data (e.g., `firstName`, `paxNo`).
 - Variables are assigned using `assign to <variableName>`.
@@ -92,6 +94,7 @@ capture line : 2, column : 32, length : 2 assign to Seats
 
 ### `if` / `else`
 Conditional logic (supported operators: `==`, `!=`, `>`, `<`).
+**CRITICAL:** The language does NOT support `else if`. To chain conditions, you MUST use nested `if` statements inside an `else` block.
 ```smartflow
 if (Seats > 1) {
     send "APN-SV/M+" + PhoneNo + "/P1-" + Seats
@@ -109,6 +112,7 @@ append "/T" + ADTime to commandline
 
 ### `call`
 Invokes another nested Smart Flow by name.
+**CRITICAL:** When constructing a `commandline` string across multiple steps, if a `call` is invoked and there are no further appends before the final `send commandline`, you MUST explicitly `append "" to commandline` right after the `call` to ensure the buffer is correctly pushed.
 ```smartflow
 call "Names, DOCS and Contact"
 ```
@@ -138,12 +142,13 @@ Family Name (surname)" assign to FamilyName
 2. **Error Handling/Looping checks:** Ensure that variables captured from the screen do not lead to invalid executions. (e.g., checking if `Seats != ""`).
 3. **Data Security:** Never store credit cards or sensitive parameters permanently in the script.
 4. **Modularity:** Group long data entry forms into `group { ... }` blocks to improve agent usability. Use `choose` workflows to segment complex steps (like adding an infant vs. adding DOCS only).
-5. **Formulas in `send` or `append`:** Smart flows support evaluating basic math in commands, like `send "df" + var1 + "-" + var2` or `send "df1;" + TMCno`. Be mindful of exact cryptic requirements.
+5. **Automation over Manual Input (The Golden Standard):** When data positions on the screen are dynamic, ALWAYS prioritize automation via "Fallback Capturing" (nesting `if/else` checks to scan down the screen) rather than relying on static coordinates or asking the user for the line number. Only use manual prompting as a last resort if programmatic verification is completely impossible.
 
 ## 5. Advanced Logic Patterns (From Real-World Scripts)
 
-### A. "Looping" via Nested IF Statements
-Smart Flow does not have a native `for` or `while` loop syntax. To handle dynamic amounts of data (e.g. gathering 1 to 20 tickets), you must use heavily nested `if` statements.
+### A. "Looping" via Nested IF Statements & UI Loops
+Smart Flow does not have a native `for` or `while` loop syntax for background array processing. To automatically scrape or parse dynamic amounts of terminal data without user intervention, you MUST use nested `if` statements (e.g., Fallback Capturing). 
+However, for user-driven input aggregation (prompting the user an unknown number of times), use the native UI loop: `choose ... until ...`. Do NOT attempt to build custom background programming loops.
 
 **Example (Processing up to 3 tickets):**
 ```smartflow
@@ -186,7 +191,7 @@ if (FoPos == "FO 065-"){
   }
   ```
 
-## 5. Terminal Coordinates & Capture Mappings (Amadeus Cryptic)
+## 6. Terminal Coordinates & Capture Mappings (Amadeus Cryptic)
 Because Smart Flow heavily relies on screen scraping via `capture line : X, column : Y, length : Z assign to varName`, understanding the exact layout of Amadeus responses is critical. 
 
 Below are common capture coordinates based on standard Amadeus cryptic responses.
