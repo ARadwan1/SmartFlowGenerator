@@ -85,6 +85,7 @@ choose "Add more sectors or Exit" until "Exit" {
 
 ### `group`
 Groups multiple `ask` or `select` statements into a single form popup.
+**CRITICAL:** A `group` block can ONLY contain `ask`, `mandatory ask`, `ask date`, `ask number`, `ask email`, and `select` statements. You CANNOT use `if`, `send`, `capture`, `append`, `choose`, or any other logic inside a `group`. Place all conditional logic OUTSIDE and AFTER the `group` block.
 ```smartflow
 group {
     mandatory ask "Family Name" assign to lastName
