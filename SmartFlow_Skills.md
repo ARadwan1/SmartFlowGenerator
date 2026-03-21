@@ -104,6 +104,20 @@ capture line : 2, column : 32, length : 2 assign to Seats
 ### `if` / `else`
 Conditional logic (supported operators: `==`, `!=`, `>`, `<`).
 **CRITICAL:** The language does NOT support `else if`. To chain conditions, you MUST use nested `if` statements inside an `else` block.
+**CRITICAL:** The language does NOT support logical operators `||` (OR) or `&&` (AND). Each `if` can only test ONE condition. To check multiple conditions, use separate nested `if` statements.
+```smartflow
+// WRONG - will cause SyntaxError:
+if (ptc != "" || currency != "") {
+}
+
+// CORRECT - nest them separately:
+if (ptc != "") {
+    append ptc to commandline
+}
+if (currency != "") {
+    append currency to commandline
+}
+```
 ```smartflow
 if (Seats > 1) {
     send "APN-SV/M+" + PhoneNo + "/P1-" + Seats
