@@ -273,19 +273,19 @@ Dissected:
 
 **Another Real-World Example:**
 ```
-FQPDMMRUHLHRJEDDMM/D01NOV/ASV/CJ/R,.LHR
+FQPDMM/D01NOV/ASV/CJRUHLHRJEDDMM/R,.LHR
 ```
 Dissected:
 - `FQP` – command
 - `DMM` – Dammam (origin)
-- `RUH` – Riyadh (connection)
+- `/D01NOV` – travel date (after origin, before next city)
+- `/ASV` – airline SV Saudia (after origin, before next city)
+- `/CJ` – booking class J Business (after origin, before next city)
+- `RUH` – Riyadh (connection, airline & class carry forward)
 - `LHR` – London (turnaround)
 - `JED` – Jeddah (connection)
 - `DMM` – Dammam (return)
-- `/D01NOV` – travel date
-- `/ASV` – airline SV (Saudia)
-- `/CJ` – booking class J (Business)
-- `/R,.LHR` – ticketing city override London
+- `/R,.LHR` – itinerary-level option: ticketing city override London
 
 **Simple Examples:**
 ```
