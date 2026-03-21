@@ -235,3 +235,100 @@ The `DF` command in Amadeus is used as an inline calculator.
 - Example: 
   `send "df" + var1 + "-" + var2`
   `capture line : 2, column : 1, length : 9 assign to Difference`
+
+### F. Informative Pricing (FQP)
+The `FQP` command prices an itinerary **without** creating a PNR. This is the primary tool for fare quoting.
+
+**Basic Syntax:** `FQP` followed by city pairs (3-letter IATA codes concatenated).
+```
+FQP MADNYC          // One-way Madrid to New York
+FQP LONSINLON       // Return London-Singapore-London
+FQP LONBOMSYDTYOFRA // Multi-city
+```
+
+**Segment-Level Options** (placed BETWEEN city codes):
+
+| Option | Meaning | Example |
+|--------|---------|---------|
+| `/A XX` | Specific airline for segment | `FQP LON/ABASINJKT/ASQBKK` |
+| `/D DDMON` | Travel date | `FQP LON/D04SEPSIN/D18OCTLON` |
+| `/C X` | Booking code (RBD) | `FQP LON/CFSIN/CYLON` |
+| `/B` | Fare breakpoint | `FQP LON/BPARHEL` |
+| `/N` | Prohibit breakpoint | `FQP LAX/NTYOSEL` |
+| `/T` | Turnaround point | `FQP LON/TPARHEL` |
+| `/V XX` | Global route indicator | `FQP LON/VEHSINLON` |
+| `/H HHMM` | Night fares | `FQP MAD/H2305LPA` |
+| `/E XXX` | Aircraft/equipment type | `FQP NCE/AIO/CC/ES58MCM` |
+| `-` | Stopover indicator | `FQP MADGVACPH-FRAZRHBUD` |
+| `--` | Surface sector | `FQP REKLON--FRAATH` |
+| `---` | Stopover + surface | `FQP LONFRAHAM---MUCDUSLON` |
+
+**Itinerary-Level Options** (placed at END of entry):
+
+| Option | Meaning | Example |
+|--------|---------|---------|
+| `/O XX` | Same airline all segments | `FQP NCEPARMIAPARNCE/OAF` |
+| `/M` | Mirror image (return = reverse of outbound) | `FQP LONSIN/M` |
+| `/L` | Lowest priced ticket image | `FQP MIALON/L` |
+| `/S` | Display mask only | `FQP LONSINLON/S` |
+| `/P` | Display fares + mask | `FQP LONSIN/P` |
+| `/R ZZ` | Passenger discount | `FQP LON/ABAPARLON/RZZ` |
+| `/R MIL` | Passenger type code | `FQP LAX/AYXNYC/RMIL` |
+| `/R MIL,*PTC` | PTC only (no lower fares) | `FQP LAX/AYXNYC/RMIL,*PTC` |
+| `/R,LON` | Point of sale override | `FQP MADPARMAD/R,LON` |
+| `/R,.FRA` | Ticketing city override | `FQP MADPARMAD/R,.FRA` |
+| `/R,OCC-6X` | Controlling carrier override | `FQP AKL/A6XMEL/A7XKUL/R,OCC-6X` |
+| `/R,FC-USD` | Currency of sale override | `FQP LONSIN/R,FC-USD` |
+| `/R,IATA` | Rules source override | `FQP PARABJPAR/R,IATA` |
+| `/R,ET` | Tax exemption | `FQP LONNCELON/R,ET` |
+| `/R,WT` | Withhold all taxes | `FQP LONNCELON/R,WT` |
+| `/R,WQ` | Withhold surcharges | `FQP NYC/AAARIO/R,WQ` |
+| `/R,AC-XX` | Add taxes by country | `FQP BOG/ACOMIA-EWR-BOG/R,AC-US` |
+| `/R,WC-XX` | Withhold taxes by country | `FQP PAR/AAFFRA-LON-PAR/R,WC-DE` |
+
+**Fare Families:** Use `/FF-NAME` for full itinerary or `/FF1-NAME/FF2-NAME` per segment:
+```
+FQP MAD/A6X/CYPAR/A6X/CELON/R,UP/FF-ECO
+FQP MAD/A6X/CYPAR/A6X/CELON/R,UP/FF1-ECO/FF2-CLASSIC
+```
+
+**Fare Combinations (FQU):** Sum fares from an FQP display:
+```
+FQU1//2//3            // Add fare lines 1, 2, and 3
+FQU1/X2//2/X3//3/X4   // Multiply: 2 adults, 3 children, 4 infants
+```
+
+**Multiple Discounts:** Up to 6 codes separated by `*`: `/RCH*ZZ*IN*ADT`
+
+**Expanded Parameter Codes:**
+
+| Code | Meaning |
+|------|---------|
+| `NAP` | No advance purchase info |
+| `NDA` | No day/time info |
+| `NMX` | No maximum stay info |
+| `NMN` | No minimum stay info |
+| `NPE` | No penalty info |
+| `PE` | Penalty info |
+| `NR` | No restriction |
+| `RF` | Refundable |
+| `NRF` | Non-refundable |
+
+Example: `FQP NYC/AAAMIABOS/R,*NPE-NAP`
+
+**FQP Response Columns:**
+- `FARE BASIS` – The fare basis code
+- `DISC` – Discount applied (blank if none)
+- `PTC` – Passenger type (1=Adult, or discount number)
+- `FARE<CUR>` – Fare amount in local currency (includes airline ticketing fees)
+- `MSG` – Messages: `FL`=flight restriction, `FQ`=no flights on date, `RB`=check booking code, `RE`=reservation conditions, `RO`=higher class required, `SR`=sales restrictions
+- `T` – Tax indicator: `Y`=included, `N`=not included, `E`=exempt
+
+**Past Date Pricing:** `FQP MUCPAR/R,15FEB05` (up to 24 months in the past, authorized users only)
+
+**CRITICAL FOR SMART FLOW GENERATION:**
+1. When building an FQP command dynamically, use `append` to construct `commandline` piece by piece: first the city pairs, then segment options, then itinerary options.
+2. Airline codes follow `/A` immediately with NO space: `/ABA` not `/A BA`.
+3. Dates follow `/D` immediately: `/D04SEP` not `/D 04SEP`.
+4. Multiple options can be chained: `FQP LON/D14SEP/ABA/CF/VEHSIN/D18OCT/ASQ/CY/VEHLON/RCH,PAR.MAD`
+5. The `TOTALS` line in FQU responses is dynamic. Use Fallback Capturing to find it.
