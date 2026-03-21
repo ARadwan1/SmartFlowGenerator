@@ -247,52 +247,94 @@ The `DF` command in Amadeus is used as an inline calculator.
 ### F. Informative Pricing (FQP)
 The `FQP` command prices an itinerary **without** creating a PNR. This is the primary tool for fare quoting.
 
-**Basic Syntax:** `FQP` followed by city pairs (3-letter IATA codes concatenated).
+**CRITICAL COMMAND STRUCTURE:**
+The FQP command is built as: `FQP` + `CITY` + `/segment_options` + `CITY` + `/segment_options` + `CITY` + `/itinerary_options`
+
+Segment-level options (airline `/A`, date `/D`, booking class `/C`, etc.) MUST be placed **AFTER the departure city and BEFORE the arrival city** of EACH segment. They are NOT placed at the end.
+
+**Structural Breakdown Example:**
 ```
-FQP MADNYC          // One-way Madrid to New York
-FQP LONSINLON       // Return London-Singapore-London
-FQP LONBOMSYDTYOFRA // Multi-city
+FQPLON/D14SEP/ABA/CF/VEHSIN/D18OCT/ASQ/CY/VEHLON/RCH,PAR.MAD
+```
+Dissected:
+- `FQP` – command
+- `LON` – origin city (London)
+- `/D14SEP` – travel date for segment 1
+- `/ABA` – airline BA for segment 1
+- `/CF` – booking class F for segment 1
+- `/VEH` – global route Eastern Hemisphere for segment 1
+- `SIN` – destination of segment 1 / origin of segment 2 (Singapore)
+- `/D18OCT` – travel date for segment 2
+- `/ASQ` – airline SQ for segment 2
+- `/CY` – booking class Y for segment 2
+- `/VEH` – global route for segment 2
+- `LON` – final destination (London)
+- `/RCH,PAR.MAD` – itinerary-level options (child discount, point of sale PAR, ticketing city MAD)
+
+**Another Real-World Example:**
+```
+FQPDMMRUHLHRJEDDMM/D01NOV/ASV/CJ/R,.LHR
+```
+Dissected:
+- `FQP` – command
+- `DMM` – Dammam (origin)
+- `RUH` – Riyadh (connection)
+- `LHR` – London (turnaround)
+- `JED` – Jeddah (connection)
+- `DMM` – Dammam (return)
+- `/D01NOV` – travel date
+- `/ASV` – airline SV (Saudia)
+- `/CJ` – booking class J (Business)
+- `/R,.LHR` – ticketing city override London
+
+**Simple Examples:**
+```
+FQP MADNYC                         // One-way, no options
+FQP LON/D04SEP/ABASIN/D18OCTLON   // Return with dates and airline per segment
+FQP LONSIN/M                      // Return using mirror image
 ```
 
-**Segment-Level Options** (placed BETWEEN city codes):
+**Segment-Level Options** (placed BETWEEN city codes, AFTER departure BEFORE arrival):
 
 | Option | Meaning | Example |
 |--------|---------|---------|
-| `/A XX` | Specific airline for segment | `FQP LON/ABASINJKT/ASQBKK` |
-| `/D DDMON` | Travel date | `FQP LON/D04SEPSIN/D18OCTLON` |
-| `/C X` | Booking code (RBD) | `FQP LON/CFSIN/CYLON` |
-| `/B` | Fare breakpoint | `FQP LON/BPARHEL` |
-| `/N` | Prohibit breakpoint | `FQP LAX/NTYOSEL` |
-| `/T` | Turnaround point | `FQP LON/TPARHEL` |
-| `/V XX` | Global route indicator | `FQP LON/VEHSINLON` |
-| `/H HHMM` | Night fares | `FQP MAD/H2305LPA` |
-| `/E XXX` | Aircraft/equipment type | `FQP NCE/AIO/CC/ES58MCM` |
-| `-` | Stopover indicator | `FQP MADGVACPH-FRAZRHBUD` |
-| `--` | Surface sector | `FQP REKLON--FRAATH` |
-| `---` | Stopover + surface | `FQP LONFRAHAM---MUCDUSLON` |
+| `/AXX` | Airline for this segment (NO space) | `/ABA` = British Airways |
+| `/DDDMON` | Travel date (NO space) | `/D04SEP` |
+| `/CX` | Booking class / RBD | `/CF` = First class |
+| `/B` | Fare breakpoint | `/B` before the city |
+| `/N` | Prohibit breakpoint | `/N` before the city |
+| `/T` | Turnaround point | `/T` before the city |
+| `/VXX` | Global route indicator | `/VEH` = Eastern Hemisphere |
+| `/HHHMM` | Night fares | `/H2305` |
+| `/EXXX` | Aircraft/equipment type | `/ES58` |
+| `-` | Stopover indicator (after city) | `CPH-` = stopover at Copenhagen |
+| `--` | Surface sector (between cities) | `LON--FRA` = surface between London-Frankfurt |
+| `---` | Stopover + surface | `HAM---MUC` |
 
-**Itinerary-Level Options** (placed at END of entry):
+**NOTE:** If you specify an airline for one segment, the system assumes the same airline for all subsequent segments unless you specify another.
+
+**Itinerary-Level Options** (placed at END of entry, after the last city):
 
 | Option | Meaning | Example |
 |--------|---------|---------|
-| `/O XX` | Same airline all segments | `FQP NCEPARMIAPARNCE/OAF` |
-| `/M` | Mirror image (return = reverse of outbound) | `FQP LONSIN/M` |
-| `/L` | Lowest priced ticket image | `FQP MIALON/L` |
-| `/S` | Display mask only | `FQP LONSINLON/S` |
-| `/P` | Display fares + mask | `FQP LONSIN/P` |
-| `/R ZZ` | Passenger discount | `FQP LON/ABAPARLON/RZZ` |
-| `/R MIL` | Passenger type code | `FQP LAX/AYXNYC/RMIL` |
-| `/R MIL,*PTC` | PTC only (no lower fares) | `FQP LAX/AYXNYC/RMIL,*PTC` |
-| `/R,LON` | Point of sale override | `FQP MADPARMAD/R,LON` |
-| `/R,.FRA` | Ticketing city override | `FQP MADPARMAD/R,.FRA` |
-| `/R,OCC-6X` | Controlling carrier override | `FQP AKL/A6XMEL/A7XKUL/R,OCC-6X` |
-| `/R,FC-USD` | Currency of sale override | `FQP LONSIN/R,FC-USD` |
-| `/R,IATA` | Rules source override | `FQP PARABJPAR/R,IATA` |
-| `/R,ET` | Tax exemption | `FQP LONNCELON/R,ET` |
-| `/R,WT` | Withhold all taxes | `FQP LONNCELON/R,WT` |
-| `/R,WQ` | Withhold surcharges | `FQP NYC/AAARIO/R,WQ` |
-| `/R,AC-XX` | Add taxes by country | `FQP BOG/ACOMIA-EWR-BOG/R,AC-US` |
-| `/R,WC-XX` | Withhold taxes by country | `FQP PAR/AAFFRA-LON-PAR/R,WC-DE` |
+| `/OXX` | Same airline ALL segments | `/OAF` |
+| `/M` | Mirror image | `/M` |
+| `/L` | Lowest priced ticket image | `/L` |
+| `/S` | Display mask only | `/S` |
+| `/P` | Display fares + mask | `/P` |
+| `/RZZ` | Passenger discount | `/RZZ` |
+| `/RMIL` | Passenger type code | `/RMIL` |
+| `/RMIL,*PTC` | PTC only (no lower fares) | `/RMIL,*PTC` |
+| `/R,LON` | Point of sale override | `/R,LON` |
+| `/R,.FRA` | Ticketing city override | `/R,.FRA` |
+| `/R,OCC-6X` | Controlling carrier override | `/R,OCC-6X` |
+| `/R,FC-USD` | Currency of sale override | `/R,FC-USD` |
+| `/R,IATA` | Rules source override | `/R,IATA` |
+| `/R,ET` | Tax exemption | `/R,ET` |
+| `/R,WT` | Withhold all taxes | `/R,WT` |
+| `/R,WQ` | Withhold surcharges | `/R,WQ` |
+| `/R,AC-XX` | Add taxes by country | `/R,AC-US` |
+| `/R,WC-XX` | Withhold taxes by country | `/R,WC-DE` |
 
 **Fare Families:** Use `/FF-NAME` for full itinerary or `/FF1-NAME/FF2-NAME` per segment:
 ```
@@ -334,9 +376,10 @@ Example: `FQP NYC/AAAMIABOS/R,*NPE-NAP`
 
 **Past Date Pricing:** `FQP MUCPAR/R,15FEB05` (up to 24 months in the past, authorized users only)
 
-**CRITICAL FOR SMART FLOW GENERATION:**
-1. When building an FQP command dynamically, use `append` to construct `commandline` piece by piece: first the city pairs, then segment options, then itinerary options.
-2. Airline codes follow `/A` immediately with NO space: `/ABA` not `/A BA`.
-3. Dates follow `/D` immediately: `/D04SEP` not `/D 04SEP`.
-4. Multiple options can be chained: `FQP LON/D14SEP/ABA/CF/VEHSIN/D18OCT/ASQ/CY/VEHLON/RCH,PAR.MAD`
+**CRITICAL RULES FOR SMART FLOW GENERATION:**
+1. **Segment options go BETWEEN cities, NOT at the end.** Build each segment as: `CITY/options CITY/options CITY`.
+2. **No spaces** after `/A`, `/D`, `/C`: write `/ABA` not `/A BA`, write `/D04SEP` not `/D 04SEP`.
+3. **Itinerary options** (`/R`, `/M`, `/L`, `/O`) go at the very END after the last city.
+4. When building dynamically in Smart Flow, use `append` to construct `commandline` piece by piece: append origin city, then its segment options, then destination city, then its options, and finally itinerary-level options.
 5. The `TOTALS` line in FQU responses is dynamic. Use Fallback Capturing to find it.
+
