@@ -16,7 +16,15 @@ Smart Flow scripts run sequentially. The language uses basic scripting logic.
 
 **Variables:**
 - Variables act as containers to store data (e.g., `firstName`, `paxNo`).
-- Variables are assigned using `assign to <variableName>`.
+- Variables are assigned using `assign to <variableName>` **ONLY as part of** `ask`, `select`, or `capture` statements. 
+- **CRITICAL:** There is NO standalone `assign` command. You CANNOT write `assign "" to varName`. To initialize an empty variable, use `append "" to varName` instead.
+  ```smartflow
+  // WRONG - will cause SyntaxError:
+  assign "" to options
+  
+  // CORRECT:
+  append "" to options
+  ```
 - **System Variables:**
   - `commandline`: Used with `append` to build a cryptic command string.
   - `lastCommand`: Stores the cryptic command that triggered the flow.
